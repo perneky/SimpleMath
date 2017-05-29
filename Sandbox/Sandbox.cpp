@@ -3,7 +3,7 @@
 #include <cstring>
 #include <string>
 
-const SimpleMath::ExternalVariables::Variable externalVariables[] =
+static const SimpleMath::ExternalVariables::Variable externalVariables[] =
 {
   SimpleMath::ExternalVariables::Variable( "cool_number", real( 14 ) ),
 };

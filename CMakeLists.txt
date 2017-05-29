@@ -25,5 +25,14 @@ set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 
+#gtest
+set( BUILD_GTEST ON CACHE BOOL "Only gtest is needed" FORCE )
+set( BUILD_GMOCK OFF CACHE BOOL "gmock is not needed" FORCE )
+set( gtest_force_shared_crt ON CACHE BOOL "SimpleMath is built using the dynamic runtime" FORCE )
+
+add_subdirectory( ThirdParty/gtest )
+
+#project
 add_subdirectory( Library )
 add_subdirectory( Sandbox )
+add_subdirectory( Test )
