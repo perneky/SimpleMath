@@ -27,38 +27,44 @@ public:
 
     if ( ldim == rdim )
     {
-      result[ 0 ] = std::fmod( a[ 0 ], b[ 0 ] );
+      result[ 0 ] = Mod( a[ 0 ], b[ 0 ] );
       if ( ldim > 1 )
       {
-        result[ 1 ] = std::fmod( a[ 1 ], b[ 1 ] );
+        result[ 1 ] = Mod( a[ 1 ], b[ 1 ] );
         if ( ldim > 2 )
         {
-          result[ 2 ] = std::fmod( a[ 2 ], b[ 2 ] );
+          result[ 2 ] = Mod( a[ 2 ], b[ 2 ] );
           if ( ldim > 3 )
           {
-            result[ 3 ] = std::fmod( a[ 3 ], b[ 3 ] );
+            result[ 3 ] = Mod( a[ 3 ], b[ 3 ] );
           }
         }
       }
     }
     else
     {
-      result[ 0 ] = std::fmod( a[ 0 ], b[ 0 ] );
+      result[ 0 ] = Mod( a[ 0 ], b[ 0 ] );
       if ( ldim > 1 )
       {
-        result[ 1 ] = std::fmod( a[ 1 ], b[ 0 ] );
+        result[ 1 ] = Mod( a[ 1 ], b[ 0 ] );
         if ( ldim > 2 )
         {
-          result[ 2 ] = std::fmod( a[ 2 ], b[ 0 ] );
+          result[ 2 ] = Mod( a[ 2 ], b[ 0 ] );
           if ( ldim > 3 )
           {
-            result[ 3 ] = std::fmod( a[ 3 ], b[ 0 ] );
+            result[ 3 ] = Mod( a[ 3 ], b[ 0 ] );
           }
         }
       }
     }
 
     return ldim;
+  }
+
+private:
+  static real Mod( real a, real b )
+  {
+    return ( b == 0 ) ? std::numeric_limits< real >::quiet_NaN() : std::fmod( a, b );
   }
 };
 

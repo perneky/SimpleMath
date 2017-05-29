@@ -2,11 +2,15 @@
 #include <cstring>
 #include "SimpleMath.hpp"
 
+#ifdef WIN32
+# include "Windows.h"
+#endif // WIN32
+
 using namespace testing;
 
 static const SimpleMath::ExternalVariables::Variable externalVariables[] =
 {
-  SimpleMath::ExternalVariables::Variable( "cool_number", real( 14 ) ),
+  SimpleMath::ExternalVariables::Variable( "test_number", real( 14 ) ),
 };
 
 struct ResultTesting : Test
@@ -31,7 +35,12 @@ struct ResultTesting : Test
     EXPECT_EQ( dim, resultDims );
 
     for ( size_t d = 0; d < resultDims; ++d )
-      EXPECT_EQ( r[ d ], result[ d ] );
+    {
+      if ( std::isnan( r[ d ] ) )
+        EXPECT_TRUE( std::isnan( result[ d ] ) );
+      else
+        EXPECT_EQ( r[ d ], result[ d ] );
+    }
 
     WasteExpression( script );
   }
@@ -58,16 +67,23 @@ struct ResultTesting : Test
   }
 
   SimpleMath::EvaluateContext context;
+
+  const real _7  = 7;
+  const real _14 = 14;
 };
 
-TEST_F( ResultTesting, SingleScalar )
-{
-  TestResult( "14", 14 );
-}
+#include "Scalars.h"
 
 int main( int argc, char* argv[] )
 {
   InitGoogleTest( &argc, argv );
 
-  return RUN_ALL_TESTS();
+  auto result = RUN_ALL_TESTS();
+
+#ifdef WIN32
+  if ( IsDebuggerPresent() )
+    std::getchar();
+#endif // WIN32
+
+  return result;
 }
