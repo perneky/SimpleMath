@@ -1,4 +1,5 @@
 #include <../ThirdParty/gtest/googletest/include/gtest/gtest.h>
+#include <cstring>
 #include "SimpleMath.hpp"
 
 using namespace testing;

@@ -411,6 +411,8 @@ static void Validate( const Tokenizer::Token& token )
   case TokenType::Number:
     ValidateNumber( token.start, token.length );
     break;
+  default:
+    break;
   }
 }
 
@@ -442,6 +444,8 @@ static Tokenizer::Tokens::const_iterator FindClosingParenthesis( Tokenizer::Toke
       --depth;
       if ( depth == 0 )
         return iter;
+      break;
+    default:
       break;
     }
   }
