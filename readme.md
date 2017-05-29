@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/perneky/SimpleMath.svg?branch=Testing)](https://travis-ci.org/perneky/SimpleMath/builds)
+
 # Simple Math
 
 Simple Math is a small and easy math scripting library. It is lightweight, embeddable and expandable by the host application without changing the library.
