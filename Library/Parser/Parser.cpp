@@ -6,6 +6,7 @@
 #include <cstring>
 
 #include "ExpressionTree/ConstantValue.hpp"
+#include "ExpressionTree/VariableValue.hpp"
 #include "ExpressionTree/OperatorAdd.hpp"
 #include "ExpressionTree/OperatorSub.hpp"
 #include "ExpressionTree/OperatorMul.hpp"
@@ -15,32 +16,12 @@
 #include "ExpressionTree/Function.hpp"
 #include "Tokenizer.hpp"
 #include "CompileError.hpp"
+#include "MathHelper.hpp"
 
 namespace SimpleMath
 {
 namespace Parser
 {
-
-static const real piValue     = real( 3.14159265358979323846 );
-static const real halfPiValue = real( 1.57079632679489661923 );
-
-static real ToRadians( real x )
-{
-  return x * piValue / 180;
-}
-
-static real ToDegrees( real x )
-{
-  return x * 180 / piValue;
-}
-
-#if USE_DEGREES_FOR_ANGLES
-# define CTM( x ) ToRadians( (x) )
-# define MTC( x ) ToDegrees( (x) )
-#else
-# define CTM( x ) (x)
-# define MTC( x ) (x)
-#endif // USE_DEGREES_FOR_ANGLES
 
 static const ExternalVariables::Variable internalVariableList[] =
 {
@@ -189,7 +170,7 @@ static size_t WrapCtg( const EvaluateContext& context, size_t argCount, const si
     return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
-    result[ elementIx ] = std::tan( halfPiValue - CTM( args[ 0 ][ elementIx ] ) );
+    result[ elementIx ] = ctg( CTM( args[ 0 ][ elementIx ] ) );
 
   return elementsCount[ 0 ];
 }
@@ -675,13 +656,13 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
       switch ( context.variables.instances[ index ].dimensions )
       {
       case 1:
-        return new ExpressionTree::ConstantValue< 1 >( context.variables.instances[ index ].value );
+        return new ExpressionTree::VariableValue< 1 >( index );
       case 2:
-        return new ExpressionTree::ConstantValue< 2 >( context.variables.instances[ index ].value );
+        return new ExpressionTree::VariableValue< 2 >( index );
       case 3:
-        return new ExpressionTree::ConstantValue< 3 >( context.variables.instances[ index ].value );
+        return new ExpressionTree::VariableValue< 3 >( index );
       case 4:
-        return new ExpressionTree::ConstantValue< 4 >( context.variables.instances[ index ].value );
+        return new ExpressionTree::VariableValue< 4 >( index );
       default:
         assert( false && "Invalid external variable dimensions." );
         return nullptr;
