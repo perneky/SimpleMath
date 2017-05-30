@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/perneky/SimpleMath.svg?branch=Testing)](https://travis-ci.org/perneky/SimpleMath/builds)
+[![Build Status](https://travis-ci.org/perneky/SimpleMath.svg?branch=master)](https://travis-ci.org/perneky/SimpleMath/builds)
 
 # Simple Math
 
