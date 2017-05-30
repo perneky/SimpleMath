@@ -2,6 +2,7 @@
 
 #include "../ThirdParty/gtest/googletest/include/gtest/gtest.h"
 #include "SimpleMath.hpp"
+#include <cstring>
 
 struct ResultTesting : testing::Test
 {

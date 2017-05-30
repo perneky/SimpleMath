@@ -2,7 +2,6 @@
 
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
-#include <cstring>
 
 struct ExternalVariablesTesting : ResultTesting {};
 
