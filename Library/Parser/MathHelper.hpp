@@ -25,8 +25,8 @@ static real ctg( real x )
 # define CTM( x ) ToRadians( (x) )
 # define MTC( x ) ToDegrees( (x) )
 #else
-# define CTM( x ) (x)
-# define MTC( x ) (x)
+# define CTM( x ) (real(x))
+# define MTC( x ) (real(x))
 #endif // USE_DEGREES_FOR_ANGLES
 
 }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "TestBase.hpp"
 
 struct ScalarTesting : ResultTesting {};
@@ -26,7 +24,7 @@ TEST_F( ScalarTesting, Mul )
 
 TEST_F( ScalarTesting, Div )
 {
-  TestResult( "14/7", 14.0 / 7 );
+  TestResult( "14/7", real( 14 ) / 7 );
 }
 
 TEST_F( ScalarTesting, DivByZero )
@@ -36,12 +34,12 @@ TEST_F( ScalarTesting, DivByZero )
 
 TEST_F( ScalarTesting, Pow )
 {
-  TestResult( "14^7", std::pow( 14, 7 ) );
+  TestResult( "14^7", std::pow( real( 14 ), real( 7 ) ) );
 }
 
 TEST_F( ScalarTesting, Mod )
 {
-  TestResult( "14%7", std::fmod( 14, 7 ) );
+  TestResult( "14%7", std::fmod( real( 14 ), real( 7 ) ) );
 }
 
 TEST_F( ScalarTesting, ModByZero )
@@ -56,25 +54,25 @@ TEST_F( ScalarTesting, Negate )
 
 TEST_F( ScalarTesting, Spaces1 )
 {
-  TestResult( "14 /7", 14 / 7 );
+  TestResult( "14 /7", real( 14 ) / 7 );
 }
 
 TEST_F( ScalarTesting, Spaces2 )
 {
-  TestResult( "14/ 7", 14 / 7 );
+  TestResult( "14/ 7", real( 14 ) / 7 );
 }
 
 TEST_F( ScalarTesting, Spaces3 )
 {
-  TestResult( "14 / 7", 14 / 7 );
+  TestResult( "14 / 7", real( 14 ) / 7 );
 }
 
 TEST_F( ScalarTesting, Spaces4 )
 {
-  TestResult( "   14       /           7   ", 14 / 7 );
+  TestResult( "   14       /           7   ", real( 14 ) / 7 );
 }
 
 TEST_F( ScalarTesting, Tabs )
 {
-  TestResult( "\t\t14\t\t\t/\t7\t\t\t\t\t", 14 / 7 );
+  TestResult( "\t\t14\t\t\t/\t7\t\t\t\t\t", real( 14 ) / 7 );
 }

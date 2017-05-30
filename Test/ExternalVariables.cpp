@@ -1,5 +1,3 @@
-#pragma once
-
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
 
@@ -27,10 +25,10 @@ TEST_F( ExternalVariablesTesting, StandaloneWithTabs )
 
 TEST_F( ExternalVariablesTesting, Operators )
 {
-  TestResult( "test_number1+test_number2", 7   + 14 );
-  TestResult( "test_number1-test_number2", 7   - 14 );
-  TestResult( "test_number1*test_number2", 7   * 14 );
-  TestResult( "test_number1/test_number2", 7.0 / 14 );
+  TestResult( "test_number1+test_number2", 7         + 14 );
+  TestResult( "test_number1-test_number2", 7         - 14 );
+  TestResult( "test_number1*test_number2", 7         * 14 );
+  TestResult( "test_number1/test_number2", real( 7 ) / 14 );
 }
 
 TEST_F( ExternalVariablesTesting, Functions )

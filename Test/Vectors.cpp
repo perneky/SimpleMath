@@ -1,5 +1,3 @@
-#pragma once
-
 #include "TestBase.hpp"
 
 struct VectorTesting : ResultTesting {};
@@ -46,27 +44,27 @@ TEST_F( VectorTesting, Single4DMul )
 
 TEST_F( VectorTesting, Single4DDiv )
 {
-  TestResult( "vector(14,7,7,14)/vector(7,7,14,14)", 14.0 / 7, 7.0 / 7, 7.0 / 14, 14.0 / 14 );
+  TestResult( "vector(14,7,7,14)/vector(7,7,14,14)", real( 14 ) / 7, real( 7 ) / 7, real( 7 ) / 14, real( 14 ) / 14 );
 }
 
 TEST_F( VectorTesting, Single4DDivByZero )
 {
-  TestResult( "vector(14,7,7,14)/vector(7,0,0,14)", 14.0 / 7, std::numeric_limits< real >::infinity(), std::numeric_limits< real >::infinity(), 14.0 / 14 );
+  TestResult( "vector(14,7,7,14)/vector(7,0,0,14)", real( 14 ) / 7, std::numeric_limits< real >::infinity(), std::numeric_limits< real >::infinity(), real( 14 ) / 14 );
 }
 
 TEST_F( VectorTesting, Single4DPow )
 {
-  TestResult( "vector(14,7,7,14)^vector(7,7,14,14)", std::pow( 14, 7 ), std::pow( 7, 7 ), std::pow( 7, 14 ), std::pow( 14, 14 ) );
+  TestResult( "vector(14,7,7,14)^vector(7,7,14,14)", std::pow( real( 14 ), real( 7 ) ), std::pow( real( 7 ), real( 7 ) ), std::pow( real( 7 ), real( 14 ) ), std::pow( real( 14 ), real( 14 ) ) );
 }
 
 TEST_F( VectorTesting, Single4DMod )
 {
-  TestResult( "vector(14,7,7,14)%vector(7,7,14,14)", std::fmod( 14, 7 ), std::fmod( 7, 7 ), std::fmod( 7, 14 ), std::fmod( 14, 14 ) );
+  TestResult( "vector(14,7,7,14)%vector(7,7,14,14)", std::fmod( real( 14 ), real( 7 ) ), std::fmod( real( 7 ), real( 7 ) ), std::fmod( real( 7 ), real( 14 ) ), std::fmod( real( 14 ), real( 14 ) ) );
 }
 
 TEST_F( VectorTesting, Single4DModByZero )
 {
-  TestResult( "vector(14,7,7,14)%vector(7,0,0,14)", std::fmod( 14, 7 ), std::numeric_limits< real >::quiet_NaN(), std::numeric_limits< real >::quiet_NaN(), std::fmod( 14, 14 ) );
+  TestResult( "vector(14,7,7,14)%vector(7,0,0,14)", std::fmod( real( 14 ), real( 7 ) ), std::numeric_limits< real >::quiet_NaN(), std::numeric_limits< real >::quiet_NaN(), std::fmod( real( 14 ), real( 14 ) ) );
 }
 
 TEST_F( VectorTesting, NegateSingle2D )
