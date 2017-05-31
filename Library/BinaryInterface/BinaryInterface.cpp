@@ -8,14 +8,13 @@ extern "C"
 
 const SimpleMath::Expression* ParseExpression( const char* expressionText
                                              , size_t length
-                                             , char* errorBuffer
-                                             , size_t errorBufferSize
+                                             , SimpleMath::ParseErrorDetails& error
                                              , const SimpleMath::EvaluateContext& context )
 {
   if ( length == 0 )
     length = std::strlen( expressionText );
 
-  if ( auto node = SimpleMath::Parser::Parser::Parse( expressionText, length, errorBuffer, errorBufferSize, context ) )
+  if ( auto node = SimpleMath::Parser::Parser::Parse( expressionText, length, error, context ) )
     return new SimpleMath::ExpressionTree::ExpressionTree( move( node ) );
   else
     return nullptr;

@@ -18,7 +18,8 @@ struct ResultTesting : testing::Test
 
   void TestResultImpl( const char* expression, size_t dim, const real* r )
   {
-    auto script = ParseExpression( expression, std::strlen( expression ), nullptr, 0, context );
+    SimpleMath::ParseErrorDetails error;
+    auto script = ParseExpression( expression, std::strlen( expression ), error, context );
     ASSERT_NE( nullptr, script );
 
     EvalResult result;
@@ -36,6 +37,16 @@ struct ResultTesting : testing::Test
     }
 
     WasteExpression( script );
+  }
+
+  void TestError( const char* expression, SimpleMath::ErrorType type )
+  {
+    SimpleMath::ParseErrorDetails error;
+
+    auto script = ParseExpression( expression, std::strlen( expression ), error, context );
+    ASSERT_EQ( nullptr, script );
+
+    EXPECT_EQ( type, error.type );
   }
 
   template< typename T1 >

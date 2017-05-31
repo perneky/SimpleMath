@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OperatorBase.hpp"
+#include "ValidationError.hpp"
 
 namespace SimpleMath
 {
@@ -13,6 +14,17 @@ public:
   virtual int GetOrder() const noexcept override
   {
     return 1;
+  }
+
+  virtual size_t Validate( const EvaluateContext& context ) const override
+  {
+    auto ldim = leftOperand ->Validate( context );
+    auto rdim = rightOperand->Validate( context );
+
+    if ( ldim != rdim && rdim != 1 )
+      throw ValidationError( ErrorType::InvalidDimensions, "For addition operator, the dimension of operands should be equal, or one for the right operand ( %d, %d ).", int( ldim ), int( rdim ) );
+
+    return ldim;
   }
 
   virtual size_t Evaluate( const EvaluateContext& context, EvalResult result ) const noexcept override

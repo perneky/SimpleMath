@@ -40,6 +40,15 @@ public:
     operands[ index ] = op;
   }
 
+  virtual size_t Validate( const EvaluateContext& context ) const override
+  {
+    size_t dims[ argCount ];
+    for ( size_t argIndex = 0; argIndex < argCount; ++argIndex )
+      dims[ argIndex ] = operands[ argIndex ]->Validate( context );
+
+    return func.validator( context, argCount, dims );
+  }
+
   virtual size_t Evaluate( const EvaluateContext& context, EvalResult result ) const noexcept override
   {
     EvalResult args[ argCount ];
@@ -63,6 +72,11 @@ public:
   Function( ExternalFunctions::Function func )
     : func( func )
   {
+  }
+
+  virtual size_t Validate( const EvaluateContext& context ) const override
+  {
+    return func.validator( context, 0, nullptr );
   }
 
   virtual size_t Evaluate( const EvaluateContext& context, EvalResult result ) const noexcept override

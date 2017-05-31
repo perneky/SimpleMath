@@ -26,7 +26,8 @@ int main()
     if ( inputExpression.empty() )
       break;
 
-    auto expression = ParseExpression( inputExpression.data(), inputExpression.size(), errorBuffer, sizeof( errorBuffer ), context );
+    SimpleMath::ParseErrorDetails error;
+    auto expression = ParseExpression( inputExpression.data(), inputExpression.size(), error, context );
     if ( expression )
     {
       EvalResult result;

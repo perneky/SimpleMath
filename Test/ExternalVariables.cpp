@@ -51,7 +51,8 @@ TEST_F( ExternalVariablesTesting, Animating )
   context.variables.instances     = externalVariables;
   context.variables.instanceCount = sizeof( externalVariables ) / sizeof externalVariables[ 0 ];
 
-  auto script = ParseExpression( expression, std::strlen( expression ), nullptr, 0, context );
+  SimpleMath::ParseErrorDetails error;
+  auto script = ParseExpression( expression, std::strlen( expression ), error, context );
   ASSERT_NE( nullptr, script );
 
   EvalResult result;

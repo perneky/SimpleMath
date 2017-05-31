@@ -15,6 +15,20 @@ public:
     return 2;
   }
 
+  virtual size_t Validate( const EvaluateContext& context ) const override
+  {
+    auto ldim = leftOperand ->Validate( context );
+    auto rdim = rightOperand->Validate( context );
+
+    if ( ldim != rdim && rdim != 1 && ldim != 1 )
+      throw ValidationError( ErrorType::InvalidDimensions, "For subtraction operator, the dimension of operands should be equal, one for the right operand, or one for the right operand with the value of zero for negation ( %d, %d ).", int( ldim ), int( rdim ) );
+
+    if ( ldim == 1 )
+      return rdim;
+
+    return ldim;
+  }
+
   virtual size_t Evaluate( const EvaluateContext& context, EvalResult result ) const noexcept override
   {
     EvalResult a, b;

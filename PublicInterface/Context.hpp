@@ -60,20 +60,23 @@ struct ExternalVariables
 
 struct ExternalFunctions
 {
-  using FunctionSignature = size_t( * )( const EvaluateContext&, size_t, const size_t*, const EvalResult*, EvalResult );
+  using FunctionSignature   = size_t( * )( const EvaluateContext&, size_t, const size_t*, const EvalResult*, EvalResult );
+  using ValidationSignature = size_t( * )( const EvaluateContext&, size_t, const size_t* );
 
   struct Function
   {
-    Function( const char* name, FunctionSignature func, size_t argCount )
-      : name    ( name     )
-      , value   ( func     )
-      , argCount( argCount )
+    Function( const char* name, FunctionSignature func, ValidationSignature valFunc, size_t argCount )
+      : name            ( name             )
+      , value           ( func             )
+      , validator       ( valFunc          )
+      , argCount        ( argCount         )
     {
     }
 
-    const char*       name;
-    FunctionSignature value;
-    size_t            argCount;
+    const char*         name;
+    FunctionSignature   value;
+    ValidationSignature validator;
+    size_t              argCount;
   };
 
   const Function* instances     = nullptr;

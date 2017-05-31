@@ -1,18 +1,19 @@
 #pragma once
 
 #include "CommonTypes.hpp"
+#include "Errors.hpp"
 #include <exception>
 #include <cstdarg>
 
 namespace SimpleMath
 {
-namespace Parser
+namespace ExpressionTree
 {
 
-class CompileError : public Exception
+class ValidationError : public Exception
 {
 public:
-  CompileError( ErrorType type, const char* format, ... )
+  ValidationError( ErrorType type, const char* format, ... )
     : Exception( type )
   {
     va_list args;
@@ -22,7 +23,7 @@ public:
 
     va_end( args );
   }
-  CompileError( ErrorType type, const char* format, va_list args )
+  ValidationError( ErrorType type, const char* format, va_list args )
     : Exception( type )
   {
     std::vsnprintf( message, sizeof( message ), format, args );

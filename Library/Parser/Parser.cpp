@@ -65,6 +65,15 @@ static size_t WrapMin( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateMin( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 2 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "min function takes two arguments with the same number of dimensions." );
+  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidDimensions, "min function takes two arguments with the same number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
 
 static size_t WrapMax( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -81,6 +90,15 @@ static size_t WrapMax( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateMax( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 2 ) 
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "max function takes two arguments with the same number of dimensions." );
+  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidDimensions, "max function takes two arguments with the same number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
 
 static size_t WrapSaturate( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -90,6 +108,13 @@ static size_t WrapSaturate( const EvaluateContext& context, size_t argCount, con
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::min( std::max( args[ 0 ][ elementIx ], real( 0 ) ), real( 1 ) );
+
+  return elementsCount[ 0 ];
+}
+static size_t ValidateSaturate( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "saturate function takes only one argument with any number of dimensions." );
 
   return elementsCount[ 0 ];
 }
@@ -105,6 +130,14 @@ static size_t WrapSin( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateSin( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "sin function takes only one argument with any number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
+
 static size_t WrapASin( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
@@ -113,6 +146,13 @@ static size_t WrapASin( const EvaluateContext& context, size_t argCount, const s
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::asin( MTC( args[ 0 ][ elementIx ] ) );
+
+  return elementsCount[ 0 ];
+}
+static size_t ValidateASin( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "asin function takes only one argument with any number of dimensions." );
 
   return elementsCount[ 0 ];
 }
@@ -128,6 +168,14 @@ static size_t WrapCos( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateCos( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "cos function takes only one argument with any number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
+
 static size_t WrapACos( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
@@ -136,6 +184,13 @@ static size_t WrapACos( const EvaluateContext& context, size_t argCount, const s
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::acos( MTC( args[ 0 ][ elementIx ] ) );
+
+  return elementsCount[ 0 ];
+}
+static size_t ValidateACos( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "acos function takes only one argument with any number of dimensions." );
 
   return elementsCount[ 0 ];
 }
@@ -151,6 +206,14 @@ static size_t WrapTan( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateTan( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "tan function takes only one argument with any number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
+
 static size_t WrapATan( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
@@ -159,6 +222,13 @@ static size_t WrapATan( const EvaluateContext& context, size_t argCount, const s
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::atan( MTC( args[ 0 ][ elementIx ] ) );
+
+  return elementsCount[ 0 ];
+}
+static size_t ValidateATan( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "atan function takes only one argument with any number of dimensions." );
 
   return elementsCount[ 0 ];
 }
@@ -174,6 +244,13 @@ static size_t WrapCtg( const EvaluateContext& context, size_t argCount, const si
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateCtg( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "ctg function takes only one argument with any number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
 
 static size_t WrapSqrt( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -183,6 +260,13 @@ static size_t WrapSqrt( const EvaluateContext& context, size_t argCount, const s
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::sqrt( args[ 0 ][ elementIx ] );
+
+  return elementsCount[ 0 ];
+}
+static size_t ValidateSqrt( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "sqrt function takes only one argument with any number of dimensions." );
 
   return elementsCount[ 0 ];
 }
@@ -205,6 +289,17 @@ static size_t MakeVector( const EvaluateContext& context, size_t argCount, const
 
   return argCount;
 }
+static size_t ValidateMakeVector( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount <= 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "vector function takes two, three or four arguments, each with one dimension." );
+
+  for ( size_t argIx = 0; argIx < argCount; argIx++ )
+    if ( elementsCount[ argIx ] != 1 )
+      throw ExpressionTree::ValidationError( ErrorType::InvalidDimensions, "vector function takes two, three or four arguments, each with one dimension." );
+
+  return argCount;
+}
 
 static size_t VectorLength( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -221,6 +316,13 @@ static size_t VectorLength( const EvaluateContext& context, size_t argCount, con
     dot += args[ 0 ][ elemIx ] * args[ 0 ][ elemIx ];
 
   result[ 0 ] = std::sqrt( dot );
+
+  return 1;
+}
+static size_t ValidateVectorLength( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "length function takes only one argument with any number of dimensions." );
 
   return 1;
 }
@@ -254,6 +356,13 @@ static size_t VectorNormalize( const EvaluateContext& context, size_t argCount, 
 
   return elementsCount[ 0 ];
 }
+static size_t ValidateVectorNormalize( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 1 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "normalize function takes only one argument with any number of dimensions." );
+
+  return elementsCount[ 0 ];
+}
 
 static size_t VectorDot( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -281,6 +390,15 @@ static size_t VectorDot( const EvaluateContext& context, size_t argCount, const 
 
   return 1;
 }
+static size_t ValidateVectorDot( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 2 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "dot function takes two arguments with the same number of dimensions." );
+  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidDimensions, "dot function takes two arguments with the same number of dimensions." );
+
+  return 1;
+}
 
 static size_t VectorCross( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
@@ -302,27 +420,36 @@ static size_t VectorCross( const EvaluateContext& context, size_t argCount, cons
 
   return 3;
 }
+static size_t ValidateVectorCross( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+{
+  if ( argCount != 2 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "cross function takes two arguments with three dimensions both." );
+  if ( elementsCount[ 0 ] != 3 || elementsCount[ 1 ] != 3 )
+    throw ExpressionTree::ValidationError( ErrorType::InvalidDimensions, "cross function takes two arguments with three dimensions both." );
+
+  return 3;
+}
 
 static const ExternalFunctions::Function internalFunctions[] =
 {
-  ExternalFunctions::Function( "sin",       WrapSin,         1 ),
-  ExternalFunctions::Function( "cos",       WrapCos,         1 ),
-  ExternalFunctions::Function( "tan",       WrapTan,         1 ),
-  ExternalFunctions::Function( "ctg",       WrapCtg,         1 ),
-  ExternalFunctions::Function( "asin",      WrapASin,        1 ),
-  ExternalFunctions::Function( "acos",      WrapACos,        1 ),
-  ExternalFunctions::Function( "atan",      WrapATan,        1 ),
-  ExternalFunctions::Function( "sqrt",      WrapSqrt,        1 ),
-  ExternalFunctions::Function( "saturate",  WrapSaturate,    1 ),
-  ExternalFunctions::Function( "min",       WrapMin,         2 ),
-  ExternalFunctions::Function( "max",       WrapMax,         2 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      2 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      3 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      4 ),
-  ExternalFunctions::Function( "length",    VectorLength,    1 ),
-  ExternalFunctions::Function( "normalize", VectorNormalize, 1 ),
-  ExternalFunctions::Function( "dot",       VectorDot,       2 ),
-  ExternalFunctions::Function( "cross",     VectorCross,     2 ),
+  ExternalFunctions::Function( "sin",       WrapSin,         ValidateSin,             1 ),
+  ExternalFunctions::Function( "cos",       WrapCos,         ValidateCos,             1 ),
+  ExternalFunctions::Function( "tan",       WrapTan,         ValidateTan,             1 ),
+  ExternalFunctions::Function( "ctg",       WrapCtg,         ValidateCtg,             1 ),
+  ExternalFunctions::Function( "asin",      WrapASin,        ValidateASin,            1 ),
+  ExternalFunctions::Function( "acos",      WrapACos,        ValidateACos,            1 ),
+  ExternalFunctions::Function( "atan",      WrapATan,        ValidateATan,            1 ),
+  ExternalFunctions::Function( "sqrt",      WrapSqrt,        ValidateSqrt,            1 ),
+  ExternalFunctions::Function( "saturate",  WrapSaturate,    ValidateSaturate,        1 ),
+  ExternalFunctions::Function( "min",       WrapMin,         ValidateMin,             2 ),
+  ExternalFunctions::Function( "max",       WrapMax,         ValidateMax,             2 ),
+  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      2 ),
+  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      3 ),
+  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      4 ),
+  ExternalFunctions::Function( "length",    VectorLength,    ValidateVectorLength,    1 ),
+  ExternalFunctions::Function( "normalize", VectorNormalize, ValidateVectorNormalize, 1 ),
+  ExternalFunctions::Function( "dot",       VectorDot,       ValidateVectorDot,       2 ),
+  ExternalFunctions::Function( "cross",     VectorCross,     ValidateVectorCross,     2 ),
 };
 
 using ParentMap = std::map< ExpressionTree::Node*, ExpressionTree::Node* >;
@@ -377,7 +504,7 @@ static void ValidateNumber( const char* text, size_t length )
       if ( dotFound )
       {
         std::string errorValue( text, length );
-        throw CompileError( "Malformed number: %s", errorValue.data() );
+        throw CompileError( ErrorType::SyntaxError, "Malformed number: %s", errorValue.data() );
       }
 
       dotFound = true;
@@ -397,7 +524,7 @@ static void Validate( const Tokenizer::Token& token )
   }
 }
 
-static void Check( bool condition, const char* format, ... )
+static void Check( bool condition, ErrorType type, const char* format, ... )
 {
   if ( !condition )
   {
@@ -406,7 +533,7 @@ static void Check( bool condition, const char* format, ... )
 
     OnScopeExit( va_end( args ) );
 
-    throw CompileError( format, args );
+    throw CompileError( type, format, args );
   }
 }
 
@@ -431,7 +558,7 @@ static Tokenizer::Tokens::const_iterator FindClosingParenthesis( Tokenizer::Toke
     }
   }
 
-  throw CompileError( "No closing parenthesis found." );
+  throw CompileError( ErrorType::ParenthezisMismatch, "No closing parenthesis found." );
 }
 
 static ExpressionTree::Node* OrderExpression( ExpressionTree::Node* cursor
@@ -480,7 +607,7 @@ static void InsertNode( ExpressionTree::Node*&  cursor
       cursorType = newNodeType;
       break;
     default:
-      throw std::exception();
+      throw CompileError( ErrorType::SyntaxError, "Number appears on an invalid place." );
     }
     break;
   case TokenType::Operator:
@@ -505,11 +632,11 @@ static void InsertNode( ExpressionTree::Node*&  cursor
       break;
     }
     default:
-      throw std::exception();
+      throw CompileError( ErrorType::SyntaxError, "Operator appears on an invalid place." );
     }
     break;
   default:
-    throw std::exception();
+    throw CompileError( ErrorType::SyntaxError, "Invalid token." );
   }
 }
 
@@ -533,7 +660,7 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
   if ( funcOpen->type != TokenType::OpenParenthesis )
   {
     std::string wrongToken( begin->start, begin->length );
-    throw CompileError( "Function name should be followed by an opening parenthesis: %s", wrongToken.data() );
+    throw CompileError( ErrorType::SyntaxError, "Function name should be followed by an opening parenthesis: %s", wrongToken.data() );
   }
 
   auto closing = FindClosingParenthesis( funcOpen, end );
@@ -670,13 +797,22 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
     }
   }
 
+  bool hasFunctionNameMatch = false;
   for ( const auto& ifn : internalFunctions )
+  {
     if ( NameCompare( ifn.name, begin->start, begin->length ) )
+    {
+      hasFunctionNameMatch = true;
       if ( auto func = CreateFunction( begin, end, parentMap, context, ifn ) )
         return func;
+    }
+  }
 
   std::string wrongToken( begin->start, begin->length );
-  throw CompileError( "Unknown string, or can't match function: %s", wrongToken.data() );
+  if ( hasFunctionNameMatch )
+    throw CompileError( ErrorType::InvalidArguments, "Can't match function because of wrong number of arguments: %s", wrongToken.data() );
+  else
+    throw CompileError( ErrorType::SyntaxError, "Unknown string: %s", wrongToken.data() );
 }
 
 static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
@@ -695,7 +831,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
     case TokenType::Number:
     {
       auto number = real( ToReal( iter->start, iter->length ) );
-      Check( cursorToken == TokenType::Operator || cursorToken == TokenType::Unknown, "Unexpected number: %f", number );
+      Check( cursorToken == TokenType::Operator || cursorToken == TokenType::Unknown, ErrorType::SyntaxError, "Unexpected number: %f", number );
       auto node = new ExpressionTree::ConstantValue< 1 >( &number );
       InsertNode( cursor, cursorToken, node, iter->type, root, parentMap );
       break;
@@ -710,7 +846,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
         auto node = new ExpressionTree::ConstantValue< 1 >( &zero );
         InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
       }
-      Check( cursorToken == TokenType::Number, "Unexpected operator: %c", opc );
+      Check( cursorToken == TokenType::Number, ErrorType::SyntaxError, "Unexpected operator: %c", opc );
       ExpressionTree::Node* node = nullptr;
       switch ( opc )
       {
@@ -733,7 +869,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
         node = new ExpressionTree::OperatorMod;
         break;
       default:
-        throw CompileError( "Unknown operator: %c", opc );
+        throw CompileError( ErrorType::SyntaxError, "Unknown operator: %c", opc );
       }
       InsertNode( cursor, cursorToken, node, iter->type, root, parentMap );
       break;
@@ -756,7 +892,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
       if ( cursorToken != TokenType::Operator && cursorToken != TokenType::Unknown )
       {
         std::string wrongToken( iter->start, iter->length );
-        throw CompileError( "Unexpected string: %s", wrongToken.data() );
+        throw CompileError( ErrorType::SyntaxError, "Unexpected string: %s", wrongToken.data() );
       }
       auto node = CreateFromString( iter, end, parentMap, context );
       InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
@@ -765,7 +901,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
     default:
     {
       std::string wrongToken( iter->start, iter->length );
-      throw CompileError( "Unknown token: %s", wrongToken.data() );
+      throw CompileError( ErrorType::SyntaxError, "Unknown token: %s", wrongToken.data() );
     }
     }
   }
@@ -775,8 +911,7 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
 
 ExpressionTree::Node::Unique Parser::Parse( const char* expressionText
                                           , size_t length
-                                          , char* errorBuffer
-                                          , size_t errorBufferSize
+                                          , ParseErrorDetails& error
                                           , const EvaluateContext& context )
 {
   try
@@ -787,13 +922,28 @@ ExpressionTree::Node::Unique Parser::Parse( const char* expressionText
       Validate( token );
 
     ParentMap parentMap;
-    return ExpressionTree::Node::Unique( BuildTree( tokenizer.GetTokens().begin(), tokenizer.GetTokens().end(), parentMap, context ) );
+    auto tree = ExpressionTree::Node::Unique( BuildTree( tokenizer.GetTokens().begin(), tokenizer.GetTokens().end(), parentMap, context ) );
+    tree->Validate( context );
+    return tree;
+  }
+  catch ( const Exception& e )
+  {
+    auto length = std::min( sizeof( error.details ) - 1, std::strlen( e.what() ) );
+    std::memcpy( error.details, e.what(), length );
+    
+    error.type              = e.GetErrorType();
+    error.details[ length ] = 0;
+    
+    return nullptr;
   }
   catch ( const std::exception& e )
   {
-    auto length = std::min( errorBufferSize - 1, std::strlen( e.what() ) );
-    std::memcpy( errorBuffer, e.what(), length );
-    errorBuffer[ length ] = 0;
+    auto length = std::min( sizeof( error.details ) - 1, std::strlen( e.what() ) );
+    std::memcpy( error.details, e.what(), length );
+
+    error.type              = ErrorType::UnknownError;
+    error.details[ length ] = 0;
+
     return nullptr;
   }
 }

@@ -2,6 +2,7 @@
 
 #include "CommonTypes.hpp"
 #include "ExpressionTree/Node.hpp"
+#include "Errors.hpp"
 
 namespace SimpleMath
 {
@@ -13,8 +14,7 @@ class Parser
 public:
   static ExpressionTree::Node::Unique Parse( const char* expressionText
                                            , size_t length
-                                           , char* errorBuffer
-                                           , size_t errorBufferSize
+                                           , ParseErrorDetails& error
                                            , const EvaluateContext& context );
 };
 

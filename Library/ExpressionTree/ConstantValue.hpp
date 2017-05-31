@@ -29,6 +29,11 @@ public:
   }
   virtual ~ConstantValue() = default;
 
+  virtual size_t Validate( const EvaluateContext& /*context*/ ) const override
+  {
+    return dim;
+  }
+
   virtual size_t Evaluate( const EvaluateContext& /*context*/, EvalResult result ) const noexcept override
   {
     result[ 0 ] = value[ 0 ];
