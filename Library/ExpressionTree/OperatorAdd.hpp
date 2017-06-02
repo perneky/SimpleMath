@@ -34,8 +34,6 @@ public:
     auto rdim = rightOperand->Evaluate( context, b );
 
     assert( ( ldim == rdim || rdim == 1 ) && "Right dimensions should be equal to the left, or one." );
-    if ( ldim != rdim && rdim != 1 )
-      return 0;
 
     if ( ldim == rdim )
     {

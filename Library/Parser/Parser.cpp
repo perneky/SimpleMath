@@ -53,12 +53,7 @@ static const ExternalVariables internalConstants( internalVariableList );
 static size_t WrapMin( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 2 );
-  if ( argCount != 2 )
-    return 0;
-
   assert( elementsCount[ 0 ] == elementsCount[ 1 ] );
-  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::min( args[ 0 ][ elementIx ], args[ 1 ][ elementIx ] );
@@ -78,12 +73,7 @@ static size_t ValidateMin( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapMax( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 2 );
-  if ( argCount != 2 )
-    return 0;
-
   assert( elementsCount[ 0 ] == elementsCount[ 1 ] );
-  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::max( args[ 0 ][ elementIx ], args[ 1 ][ elementIx ] );
@@ -103,8 +93,6 @@ static size_t ValidateMax( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapSaturate( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::min( std::max( args[ 0 ][ elementIx ], real( 0 ) ), real( 1 ) );
@@ -122,8 +110,6 @@ static size_t ValidateSaturate( const EvaluateContext& /*context*/, size_t argCo
 static size_t WrapSin( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::sin( CTM( args[ 0 ][ elementIx ] ) );
@@ -141,8 +127,6 @@ static size_t ValidateSin( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapASin( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::asin( MTC( args[ 0 ][ elementIx ] ) );
@@ -160,8 +144,6 @@ static size_t ValidateASin( const EvaluateContext& /*context*/, size_t argCount,
 static size_t WrapCos( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::cos( CTM( args[ 0 ][ elementIx ] ) );
@@ -179,8 +161,6 @@ static size_t ValidateCos( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapACos( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::acos( MTC( args[ 0 ][ elementIx ] ) );
@@ -198,8 +178,6 @@ static size_t ValidateACos( const EvaluateContext& /*context*/, size_t argCount,
 static size_t WrapTan( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::tan( CTM( args[ 0 ][ elementIx ] ) );
@@ -217,8 +195,6 @@ static size_t ValidateTan( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapATan( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::atan( MTC( args[ 0 ][ elementIx ] ) );
@@ -236,8 +212,6 @@ static size_t ValidateATan( const EvaluateContext& /*context*/, size_t argCount,
 static size_t WrapCtg( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = ctg( CTM( args[ 0 ][ elementIx ] ) );
@@ -255,8 +229,6 @@ static size_t ValidateCtg( const EvaluateContext& /*context*/, size_t argCount, 
 static size_t WrapSqrt( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
 
   for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
     result[ elementIx ] = std::sqrt( args[ 0 ][ elementIx ] );
@@ -274,14 +246,10 @@ static size_t ValidateSqrt( const EvaluateContext& /*context*/, size_t argCount,
 static size_t MakeVector( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount > 1 );
-  if ( argCount <= 1 )
-    return 0;
 
   for ( size_t argIx = 0; argIx < argCount; argIx++ )
   {
     assert( elementsCount[ argIx ] == 1 );
-    if ( elementsCount[ argIx ] != 1 )
-      return 0;
   }
 
   for ( size_t argIx = 0; argIx < argCount; argIx++ )
@@ -304,12 +272,7 @@ static size_t ValidateMakeVector( const EvaluateContext& /*context*/, size_t arg
 static size_t VectorLength( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
-
   assert( elementsCount[ 0 ] > 0 );
-  if ( elementsCount[ 0 ] == 0 )
-    return 0;
 
   real dot = 0;
   for ( size_t elemIx = 0; elemIx < elementsCount[ 0 ]; elemIx++ )
@@ -330,12 +293,7 @@ static size_t ValidateVectorLength( const EvaluateContext& /*context*/, size_t a
 static size_t VectorNormalize( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 1 );
-  if ( argCount != 1 )
-    return 0;
-
   assert( elementsCount[ 0 ] > 0 );
-  if ( elementsCount[ 0 ] == 0 )
-    return 0;
 
   real length = 0;
   for ( size_t elemIx = 0; elemIx < elementsCount[ 0 ]; elemIx++ )
@@ -367,20 +325,9 @@ static size_t ValidateVectorNormalize( const EvaluateContext& /*context*/, size_
 static size_t VectorDot( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 2 );
-  if ( argCount != 2 )
-    return 0;
-
   assert( elementsCount[ 0 ] > 0 );
-  if ( elementsCount[ 0 ] == 0 )
-    return 0;
-
   assert( elementsCount[ 1 ] > 0 );
-  if ( elementsCount[ 1 ] == 0 )
-    return 0;
-
   assert( elementsCount[ 0 ] == elementsCount[ 1 ] );
-  if ( elementsCount[ 0 ] != elementsCount[ 1 ] )
-    return 0;
 
   real dot = 0;
   for ( size_t elemIx = 0; elemIx < elementsCount[ 0 ]; elemIx++ )
@@ -403,16 +350,8 @@ static size_t ValidateVectorDot( const EvaluateContext& /*context*/, size_t argC
 static size_t VectorCross( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
 {
   assert( argCount == 2 );
-  if ( argCount != 2 )
-    return 0;
-
   assert( elementsCount[ 0 ] == 3 );
-  if ( elementsCount[ 0 ] != 3 )
-    return 0;
-
   assert( elementsCount[ 1 ] == 3 );
-  if ( elementsCount[ 1 ] != 3 )
-    return 0;
 
   result[ 0 ] = args[ 0 ][ 1 ] * args[ 1 ][ 2 ] - args[ 0 ][ 2 ] * args[ 1 ][ 1 ];
   result[ 1 ] = args[ 0 ][ 2 ] * args[ 1 ][ 0 ] - args[ 0 ][ 0 ] * args[ 1 ][ 2 ];

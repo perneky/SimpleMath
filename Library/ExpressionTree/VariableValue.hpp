@@ -27,13 +27,7 @@ public:
     assert( index < context.variables.instanceCount && "Invalid variable index" );
     assert( dim == context.variables.instances[ index ].dimensions && "Invalid variable index" );
 
-    if ( index >= context.variables.instanceCount )
-      return 0;
-
     const auto& var = context.variables.instances[ index ];
-
-    if ( dim != context.variables.instances[ index ].dimensions )
-      return 0;
 
     result[ 0 ] = var.value[ 0 ];
     if ( dim > 1 )
