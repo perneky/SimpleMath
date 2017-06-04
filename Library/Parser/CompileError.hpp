@@ -1,7 +1,8 @@
 #pragma once
 
 #include "CommonTypes.hpp"
-#include <exception>
+#include "../CommonHeaders/InternalTypes.hpp"
+
 #include <cstdarg>
 
 namespace SimpleMath

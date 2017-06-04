@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Errors.hpp"
+
 #include <memory>
 #include <vector>
 #include <string>
 #include <map>
-#include "Errors.hpp"
+#include <exception>
 
 namespace SimpleMath
 {

@@ -1,10 +1,5 @@
 #include "Parser.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-#include <cstring>
-
 #include "ExpressionTree/ConstantValue.hpp"
 #include "ExpressionTree/VariableValue.hpp"
 #include "ExpressionTree/OperatorAdd.hpp"
@@ -17,6 +12,11 @@
 #include "Tokenizer.hpp"
 #include "CompileError.hpp"
 #include "MathHelper.hpp"
+
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <cstring>
 
 namespace SimpleMath
 {
@@ -585,7 +585,7 @@ static bool NameCompare( const char* ref, const char* val, size_t valSize )
     if ( tolower( ref[ iter ] ) != tolower( val[ iter ] ) )
       return false;
 
-  return true;
+  return ref[ valSize ] == 0;
 }
 
 static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& begin
@@ -743,6 +743,17 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
     {
       hasFunctionNameMatch = true;
       if ( auto func = CreateFunction( begin, end, parentMap, context, ifn ) )
+        return func;
+    }
+  }
+
+  for ( size_t fnIx = 0; fnIx < context.functions.instanceCount; ++fnIx )
+  {
+    const auto& xfn = context.functions.instances[ fnIx ];
+    if ( NameCompare( xfn.name, begin->start, begin->length ) )
+    {
+      hasFunctionNameMatch = true;
+      if ( auto func = CreateFunction( begin, end, parentMap, context, xfn ) )
         return func;
     }
   }

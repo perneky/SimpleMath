@@ -2,6 +2,7 @@
 
 #include "../ThirdParty/gtest/googletest/include/gtest/gtest.h"
 #include "SimpleMath.hpp"
+#include "ExpressionTree/ValidationError.hpp"
 #include <cstring>
 
 struct ResultTesting : testing::Test
@@ -10,6 +11,8 @@ struct ResultTesting : testing::Test
   {
     context.variables.instances     = externalVariables;
     context.variables.instanceCount = sizeof( externalVariables ) / sizeof externalVariables[ 0 ];
+    context.functions.instances     = externalFunctions;
+    context.functions.instanceCount = sizeof( externalFunctions ) / sizeof externalFunctions[ 0 ];
   }
 
   virtual void TearDown() override
@@ -80,5 +83,27 @@ struct ResultTesting : testing::Test
   {
     SimpleMath::ExternalVariables::Variable( "test_number1", real( 7  ) ),
     SimpleMath::ExternalVariables::Variable( "test_number2", real( 14 ) ),
+  };
+
+  static size_t ExternalTestFunction( const SimpleMath::EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
+  {
+    assert( argCount == 1 );
+
+    for ( size_t elementIx = 0; elementIx < elementsCount[ 0 ]; ++elementIx )
+      result[ elementIx ] = args[ 0 ][ elementIx ] + 1;
+
+    return elementsCount[ 0 ];
+  }
+  static size_t ValidateTest( const SimpleMath::EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+  {
+    if ( argCount != 1 )
+      throw SimpleMath::ExpressionTree::ValidationError( SimpleMath::ErrorType::InvalidArguments, "test function takes only one argument with any number of dimensions." );
+
+    return elementsCount[ 0 ];
+  }
+
+  const SimpleMath::ExternalFunctions::Function externalFunctions[ 1 ] =
+  {
+    SimpleMath::ExternalFunctions::Function( "test", ExternalTestFunction, ValidateTest, 1 ),
   };
 };

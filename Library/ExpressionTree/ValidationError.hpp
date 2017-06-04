@@ -2,7 +2,8 @@
 
 #include "CommonTypes.hpp"
 #include "Errors.hpp"
-#include <exception>
+#include "../CommonHeaders/InternalTypes.hpp"
+
 #include <cstdarg>
 
 namespace SimpleMath
