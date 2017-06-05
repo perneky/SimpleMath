@@ -28,6 +28,20 @@ struct STDAllocator
   {
   }
 
+  pointer address( reference r ) 
+  {
+    return &r;
+  }
+  const_pointer address( const_reference r ) 
+  {
+    return &r;
+  }
+
+  size_type max_size() const 
+  {
+    return std::numeric_limits< size_type >::max() / sizeof( value_type );
+  }
+
   pointer allocate( std::size_t n ) 
   {
     auto p = SimpleMath::customAlloc ? SimpleMath::customAlloc( n * sizeof( value_type ) ) : std::malloc( n * sizeof( value_type ) );
