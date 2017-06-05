@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Expression.hpp"
-#include "ExpressionTree\Node.hpp"
+#include "ExpressionTree/Node.hpp"
 
 #include <memory>
 
