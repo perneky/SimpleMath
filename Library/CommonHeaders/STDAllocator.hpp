@@ -36,7 +36,10 @@ struct STDAllocator
   }
 
   template< typename U >
-  using rebind = STDAllocator< U >;
+  struct rebind 
+  {
+    using other = STDAllocator< U >; 
+  };
 };
 
 }
