@@ -41,9 +41,10 @@ struct STDAllocator
     SimpleMath::customDealloc ? SimpleMath::customDealloc( p ) : std::free( p );
   }
 
-  void construct( pointer p, const_reference t )
+  template< typename... TArgs >
+  void construct( pointer p, TArgs&&... args )
   {
-    new( p ) T( t );
+    new( p ) T( std::forward< TArgs >( args )... );
   }
   void destroy( pointer p )
   {
