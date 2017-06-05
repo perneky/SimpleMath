@@ -1,5 +1,7 @@
 #include "TestBase.hpp"
 
+using namespace SimpleMath;
+
 struct ScalarTesting : ResultTesting {};
 
 TEST_F( ScalarTesting, Single )

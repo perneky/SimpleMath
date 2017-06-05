@@ -3,6 +3,9 @@
 #include "CommonTypes.hpp"
 #include "Tokens.hpp"
 #include "CommonHeaders/InternalTypes.hpp"
+#include "CommonHeaders/STDAllocator.hpp"
+
+#include <vector>
 
 namespace SimpleMath
 {
@@ -27,9 +30,13 @@ public:
     size_t      length = 0;
   };
 
-  using Tokens = std::vector< Token >;
+  using Tokens = std::vector< Token, STDAllocator< Token > >;
 
   Tokenizer( const char* expressionText, size_t length );
+  ~Tokenizer()
+  {
+    printf( "" );
+  }
 
   const Tokens& GetTokens() const noexcept { return tokens; }
 

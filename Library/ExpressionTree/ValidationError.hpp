@@ -2,7 +2,7 @@
 
 #include "CommonTypes.hpp"
 #include "Errors.hpp"
-#include "../CommonHeaders/InternalTypes.hpp"
+#include "CommonHeaders/InternalTypes.hpp"
 
 #include <cstdarg>
 
@@ -36,7 +36,7 @@ public:
   }
 
 private:
-  char message[ 1000 ];
+  char message[ 1024 ];
 };
 
 }

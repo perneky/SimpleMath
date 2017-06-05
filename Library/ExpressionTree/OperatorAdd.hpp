@@ -3,6 +3,8 @@
 #include "OperatorBase.hpp"
 #include "ValidationError.hpp"
 
+#include <cassert>
+
 namespace SimpleMath
 {
 namespace ExpressionTree

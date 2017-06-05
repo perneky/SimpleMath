@@ -1,6 +1,8 @@
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
 
+using namespace SimpleMath;
+
 struct ExternalFunctionTesting : ResultTesting {};
 
 TEST_F( ExternalFunctionTesting, Match1 )
@@ -15,16 +17,16 @@ TEST_F( ExternalFunctionTesting, Match2 )
 
 TEST_F( ExternalFunctionTesting, NotMatch1 )
 {
-  TestError( "test(1,3,4)", SimpleMath::ErrorType::InvalidArguments );
+  TestError( "test(1,3,4)", ErrorType::InvalidArguments );
 }
 
 TEST_F( ExternalFunctionTesting, NotMatch2 )
 {
-  TestError( "test()", SimpleMath::ErrorType::InvalidArguments );
+  TestError( "test()", ErrorType::InvalidArguments );
 }
 
 TEST_F( ExternalFunctionTesting, NotMatch3 )
 {
-  TestError( "test(vector(1,2),vector(3,4))", SimpleMath::ErrorType::InvalidArguments );
+  TestError( "test(vector(1,2),vector(3,4))", ErrorType::InvalidArguments );
 }
 

@@ -12,11 +12,14 @@
 #include "Tokenizer.hpp"
 #include "CompileError.hpp"
 #include "MathHelper.hpp"
+#include "CommonHeaders/STDAllocator.hpp"
 
 #include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <cstring>
+#include <cctype>
+#include <map>
 
 namespace SimpleMath
 {
@@ -391,7 +394,7 @@ static const ExternalFunctions::Function internalFunctions[] =
   ExternalFunctions::Function( "cross",     VectorCross,     ValidateVectorCross,     2 ),
 };
 
-using ParentMap = std::map< ExpressionTree::Node*, ExpressionTree::Node* >;
+using ParentMap = std::map< ExpressionTree::Node*, ExpressionTree::Node*, std::less< ExpressionTree::Node* >, STDAllocator< std::pair< const ExpressionTree::Node*, ExpressionTree::Node* > > >;
 
 static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
                                       , Tokenizer::Tokens::const_iterator end
@@ -579,13 +582,16 @@ static void InsertNode( ExpressionTree::Node*&  cursor
   }
 }
 
-static bool NameCompare( const char* ref, const char* val, size_t valSize )
+static bool NameCompare( const char* ref, size_t refSize, const char* val, size_t valSize )
 {
+  if ( refSize != valSize )
+    return false;
+
   for ( size_t iter = 0; iter < valSize && ref[ iter ]; ++iter )
-    if ( tolower( ref[ iter ] ) != tolower( val[ iter ] ) )
+    if ( std::tolower( ref[ iter ] ) != std::tolower( val[ iter ] ) )
       return false;
 
-  return ref[ valSize ] == 0;
+  return true;
 }
 
 static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& begin
@@ -615,7 +621,7 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
   else
   {
     using ArgSection = std::pair< Tokenizer::Tokens::const_iterator, Tokenizer::Tokens::const_iterator >;
-    std::vector< ArgSection > argSections( func.argCount );
+    auto argSections = std::make_unique< ArgSection[] >( func.argCount );
 
     std::unique_ptr< ExpressionTree::FunctionBase > resultFunction;
     switch ( func.argCount )
@@ -649,7 +655,7 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
     bool   newSection     = true;
     size_t currentSection = 0;
     auto   iter           = funcOpen + 1;
-    for ( ; iter != closing && currentSection < argSections.size(); ++iter )
+    for ( ; iter != closing && currentSection < func.argCount; ++iter )
     {
       if ( iter->type == TokenType::Comma )
       {
@@ -670,15 +676,15 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
         iter = FindClosingParenthesis( iter, closing );
     }
 
-    if ( newSection && currentSection < argSections.size() )
+    if ( newSection && currentSection < func.argCount )
       return nullptr;
 
-    if ( iter != closing || currentSection != argSections.size() - 1 )
+    if ( iter != closing || currentSection != func.argCount - 1 )
       return nullptr;
 
     argSections[ currentSection ].second = iter;
 
-    for ( size_t argIndex = 0; argIndex < argSections.size(); ++argIndex )
+    for ( size_t argIndex = 0; argIndex < func.argCount; ++argIndex )
       resultFunction->SetOperand( argIndex, BuildTree( argSections[ argIndex ].first
                                                      , argSections[ argIndex ].second
                                                      , parentMap
@@ -696,7 +702,8 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
 {
   for ( size_t icIx = 0; icIx < internalConstants.instanceCount; ++icIx )
   {
-    if ( NameCompare( internalConstants.instances[ icIx ].name, begin->start, begin->length ) )
+    const auto& ic = internalConstants.instances[ icIx ];
+    if ( NameCompare( ic.name, ic.nameLength, begin->start, begin->length ) )
     {
       switch ( internalConstants.instances[ icIx ].dimensions )
       {
@@ -717,7 +724,8 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
 
   for ( size_t index = 0; index < context.variables.instanceCount; ++index )
   {
-    if ( NameCompare( context.variables.instances[ index ].name, begin->start, begin->length ) )
+    const auto& ec = context.variables.instances[ index ];
+    if ( NameCompare( ec.name, ec.nameLength, begin->start, begin->length ) )
     {
       switch ( context.variables.instances[ index ].dimensions )
       {
@@ -739,7 +747,7 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
   bool hasFunctionNameMatch = false;
   for ( const auto& ifn : internalFunctions )
   {
-    if ( NameCompare( ifn.name, begin->start, begin->length ) )
+    if ( NameCompare( ifn.name, ifn.nameLength, begin->start, begin->length ) )
     {
       hasFunctionNameMatch = true;
       if ( auto func = CreateFunction( begin, end, parentMap, context, ifn ) )
@@ -750,7 +758,7 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
   for ( size_t fnIx = 0; fnIx < context.functions.instanceCount; ++fnIx )
   {
     const auto& xfn = context.functions.instances[ fnIx ];
-    if ( NameCompare( xfn.name, begin->start, begin->length ) )
+    if ( NameCompare( xfn.name, xfn.nameLength, begin->start, begin->length ) )
     {
       hasFunctionNameMatch = true;
       if ( auto func = CreateFunction( begin, end, parentMap, context, xfn ) )
@@ -859,10 +867,10 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
   return root;
 }
 
-ExpressionTree::Node::Unique Parser::Parse( const char* expressionText
-                                          , size_t length
-                                          , ParseErrorDetails& error
-                                          , const EvaluateContext& context )
+ExpressionTree::Node* Parser::Parse( const char* expressionText
+                                   , size_t length
+                                   , ParseErrorDetails& error
+                                   , const EvaluateContext& context )
 {
   try
   {
@@ -872,7 +880,7 @@ ExpressionTree::Node::Unique Parser::Parse( const char* expressionText
       Validate( token );
 
     ParentMap parentMap;
-    auto tree = ExpressionTree::Node::Unique( BuildTree( tokenizer.GetTokens().begin(), tokenizer.GetTokens().end(), parentMap, context ) );
+    auto tree = BuildTree( tokenizer.GetTokens().begin(), tokenizer.GetTokens().end(), parentMap, context );
     tree->Validate( context );
     return tree;
   }

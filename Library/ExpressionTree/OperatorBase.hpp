@@ -2,9 +2,6 @@
 
 #include "Node.hpp"
 
-#include <cmath>
-#include <cassert>
-
 namespace SimpleMath
 {
 namespace ExpressionTree

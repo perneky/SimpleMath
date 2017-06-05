@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 namespace SimpleMath
 {
 
@@ -11,12 +13,14 @@ struct ExternalVariables
   {
     Variable( const char* name, real inValue0 )
       : name ( name  )
+      , nameLength( std::strlen( name ) )
       , dimensions( 1 )
     {
       value[ 0 ] = inValue0;
     }
     Variable( const char* name, real inValue0, real inValue1 )
       : name( name )
+      , nameLength( std::strlen( name ) )
       , dimensions( 2 )
     {
       value[ 0 ] = inValue0;
@@ -24,6 +28,7 @@ struct ExternalVariables
     }
     Variable( const char* name, real inValue0, real inValue1, real inValue2 )
       : name( name )
+      , nameLength( std::strlen( name ) )
       , dimensions( 3 )
     {
       value[ 0 ] = inValue0;
@@ -32,6 +37,7 @@ struct ExternalVariables
     }
     Variable( const char* name, real inValue0, real inValue1, real inValue2, real inValue3 )
       : name( name )
+      , nameLength( std::strlen( name ) )
       , dimensions( 4 )
     {
       value[ 0 ] = inValue0;
@@ -41,6 +47,7 @@ struct ExternalVariables
     }
 
     const char* name;
+    size_t      nameLength;
     size_t      dimensions;
     real        value[ 4 ];
   };
@@ -66,14 +73,16 @@ struct ExternalFunctions
   struct Function
   {
     Function( const char* name, FunctionSignature func, ValidationSignature valFunc, size_t argCount )
-      : name            ( name             )
-      , value           ( func             )
-      , validator       ( valFunc          )
-      , argCount        ( argCount         )
+      : name( name )
+      , nameLength( std::strlen( name ) )
+      , value( func )
+      , validator( valFunc )
+      , argCount( argCount )
     {
     }
 
     const char*         name;
+    size_t              nameLength;
     FunctionSignature   value;
     ValidationSignature validator;
     size_t              argCount;

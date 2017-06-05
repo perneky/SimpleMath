@@ -1,6 +1,8 @@
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
 
+using namespace SimpleMath;
+
 struct InternalFunctionTesting : ResultTesting {};
 
 TEST_F( InternalFunctionTesting, SinScalar )
@@ -35,12 +37,12 @@ TEST_F( InternalFunctionTesting, TanVector )
 
 TEST_F( InternalFunctionTesting, CtgScalar )
 {
-  TestResult( "ctg(14)", SimpleMath::ctg( CTM( 14 ) ) );
+  TestResult( "ctg(14)", ctg( CTM( 14 ) ) );
 }
 
 TEST_F( InternalFunctionTesting, CtgVector )
 {
-  TestResult( "ctg(vector(7,14))", SimpleMath::ctg( CTM( 7 ) ), SimpleMath::ctg( CTM( 14 ) ) );
+  TestResult( "ctg(vector(7,14))", ctg( CTM( 7 ) ), ctg( CTM( 14 ) ) );
 }
 
 TEST_F( InternalFunctionTesting, ASinScalar )

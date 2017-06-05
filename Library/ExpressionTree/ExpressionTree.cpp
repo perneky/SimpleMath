@@ -6,8 +6,8 @@ namespace SimpleMath
 namespace ExpressionTree
 {
 
-ExpressionTree::ExpressionTree( Node::Unique root )
-  : root( std::move( root ) )
+ExpressionTree::ExpressionTree( Node* root )
+  : root( root )
 {
 }
 

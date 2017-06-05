@@ -12,8 +12,6 @@ namespace ExpressionTree
 class Node
 {
 public:
-  using Unique = std::unique_ptr< Node >;
-
   virtual ~Node() = default;
 
   virtual size_t Validate( const EvaluateContext& context ) const = 0;

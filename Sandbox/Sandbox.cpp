@@ -5,7 +5,7 @@
 
 static const SimpleMath::ExternalVariables::Variable externalVariables[] =
 {
-  SimpleMath::ExternalVariables::Variable( "cool_number", real( 14 ) ),
+  SimpleMath::ExternalVariables::Variable( "cool_number", SimpleMath::real( 14 ) ),
 };
 
 int main()

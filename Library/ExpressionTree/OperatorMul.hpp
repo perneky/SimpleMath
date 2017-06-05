@@ -2,6 +2,8 @@
 
 #include "OperatorBase.hpp"
 
+#include <cassert>
+
 namespace SimpleMath
 {
 namespace ExpressionTree

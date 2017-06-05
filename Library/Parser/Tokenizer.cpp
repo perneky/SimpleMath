@@ -1,5 +1,7 @@
 #include "Tokenizer.hpp"
 
+#include <cctype>
+
 namespace SimpleMath
 {
 namespace Parser
@@ -69,7 +71,7 @@ Tokenizer::Tokenizer( const char* expressionText, size_t length )
     size_t    nextTokenEnd;
     TokenType nextTokenType;
 
-    char tokenStart = tolower( expressionText[ nextTokenStart ] );
+    char tokenStart = std::tolower( expressionText[ nextTokenStart ] );
     switch ( tokenStart )
     {
     case ',':

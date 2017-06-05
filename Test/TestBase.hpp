@@ -5,6 +5,8 @@
 #include "ExpressionTree/ValidationError.hpp"
 #include <cstring>
 
+using namespace SimpleMath;
+
 struct ResultTesting : testing::Test
 {
   virtual void SetUp() override
@@ -21,7 +23,7 @@ struct ResultTesting : testing::Test
 
   void TestResultImpl( const char* expression, size_t dim, const real* r )
   {
-    SimpleMath::ParseErrorDetails error;
+    ParseErrorDetails error;
     auto script = ParseExpression( expression, std::strlen( expression ), error, context );
     ASSERT_NE( nullptr, script );
 
@@ -42,9 +44,9 @@ struct ResultTesting : testing::Test
     WasteExpression( script );
   }
 
-  void TestError( const char* expression, SimpleMath::ErrorType type )
+  void TestError( const char* expression, ErrorType type )
   {
-    SimpleMath::ParseErrorDetails error;
+    ParseErrorDetails error;
 
     auto script = ParseExpression( expression, std::strlen( expression ), error, context );
     ASSERT_EQ( nullptr, script );
@@ -77,15 +79,15 @@ struct ResultTesting : testing::Test
     TestResultImpl( expression, 4, r );
   }
 
-  SimpleMath::EvaluateContext context;
+  EvaluateContext context;
 
-  const SimpleMath::ExternalVariables::Variable externalVariables[ 2 ] =
+  const ExternalVariables::Variable externalVariables[ 2 ] =
   {
-    SimpleMath::ExternalVariables::Variable( "test_number1", real( 7  ) ),
-    SimpleMath::ExternalVariables::Variable( "test_number2", real( 14 ) ),
+    ExternalVariables::Variable( "test_number1", real( 7  ) ),
+    ExternalVariables::Variable( "test_number2", real( 14 ) ),
   };
 
-  static size_t ExternalTestFunction( const SimpleMath::EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
+  static size_t ExternalTestFunction( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
   {
     assert( argCount == 1 );
 
@@ -94,16 +96,16 @@ struct ResultTesting : testing::Test
 
     return elementsCount[ 0 ];
   }
-  static size_t ValidateTest( const SimpleMath::EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
+  static size_t ValidateTest( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
   {
     if ( argCount != 1 )
-      throw SimpleMath::ExpressionTree::ValidationError( SimpleMath::ErrorType::InvalidArguments, "test function takes only one argument with any number of dimensions." );
+      throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "test function takes only one argument with any number of dimensions." );
 
     return elementsCount[ 0 ];
   }
 
-  const SimpleMath::ExternalFunctions::Function externalFunctions[ 1 ] =
+  const ExternalFunctions::Function externalFunctions[ 1 ] =
   {
-    SimpleMath::ExternalFunctions::Function( "test", ExternalTestFunction, ValidateTest, 1 ),
+    ExternalFunctions::Function( "test", ExternalTestFunction, ValidateTest, 1 ),
   };
 };

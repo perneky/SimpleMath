@@ -3,9 +3,6 @@
 #include "Errors.hpp"
 
 #include <memory>
-#include <vector>
-#include <string>
-#include <map>
 #include <exception>
 
 namespace SimpleMath
