@@ -20,6 +20,7 @@
 #include <cstring>
 #include <cctype>
 #include <map>
+#include <memory>
 
 namespace SimpleMath
 {
