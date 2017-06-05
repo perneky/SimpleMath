@@ -30,7 +30,7 @@ int main()
     auto expression = ParseExpression( inputExpression.data(), inputExpression.size(), error, context );
     if ( expression )
     {
-      EvalResult result;
+      SimpleMath::EvalResult result;
       auto dims = expression->Evaluate( context, result );
       std::cout << "\nThe result has " << std::to_string( dims ) << " dimensions: ";
       for ( size_t dim = 0; dim < dims; ++dim )
