@@ -1,5 +1,4 @@
 #include "ExpressionTree.hpp"
-#include "Node.hpp"
 
 namespace SimpleMath
 {

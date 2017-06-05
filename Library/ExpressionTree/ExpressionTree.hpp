@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Expression.hpp"
+#include "ExpressionTree\Node.hpp"
 
 #include <memory>
 
@@ -8,8 +9,6 @@ namespace SimpleMath
 {
 namespace ExpressionTree
 {
-
-class Node;
 
 class ExpressionTree : public Expression
 {
