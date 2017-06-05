@@ -5,6 +5,7 @@
 #include "CommonHeaders/InternalTypes.hpp"
 
 #include <cstdarg>
+#include <cstdio>
 
 namespace SimpleMath
 {

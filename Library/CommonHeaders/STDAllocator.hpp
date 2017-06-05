@@ -2,6 +2,8 @@
 
 #include "../../PublicInterface/BinaryInterface.hpp"
 
+#include <cstdlib>
+
 namespace SimpleMath
 {
 

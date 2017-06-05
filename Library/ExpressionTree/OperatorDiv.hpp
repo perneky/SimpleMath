@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <cassert>
+#include <limits>
 
 namespace SimpleMath
 {
