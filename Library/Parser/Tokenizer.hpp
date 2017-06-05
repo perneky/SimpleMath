@@ -33,10 +33,6 @@ public:
   using Tokens = std::vector< Token, STDAllocator< Token > >;
 
   Tokenizer( const char* expressionText, size_t length );
-  ~Tokenizer()
-  {
-    printf( "" );
-  }
 
   const Tokens& GetTokens() const noexcept { return tokens; }
 

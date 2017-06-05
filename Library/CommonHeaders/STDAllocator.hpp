@@ -28,17 +28,26 @@ struct STDAllocator
   {
   }
 
-  T* allocate( std::size_t n ) 
+  pointer allocate( std::size_t n ) 
   {
-    auto p = SimpleMath::customAlloc ? SimpleMath::customAlloc( n * sizeof( T ) ) : std::malloc( n * sizeof( T ) );
+    auto p = SimpleMath::customAlloc ? SimpleMath::customAlloc( n * sizeof( value_type ) ) : std::malloc( n * sizeof( value_type ) );
     if ( !p )
       throw std::bad_alloc();
 
-    return static_cast< T* >( p );
+    return static_cast< pointer >( p );
   }
-  void deallocate( T* ptr, std::size_t ) 
+  void deallocate( pointer p, std::size_t ) 
   {
-    SimpleMath::customDealloc ? SimpleMath::customDealloc( ptr ) : std::free( ptr );
+    SimpleMath::customDealloc ? SimpleMath::customDealloc( p ) : std::free( p );
+  }
+
+  void construct( pointer p, const_reference t )
+  {
+    new( p ) T( t );
+  }
+  void destroy( pointer p )
+  {
+    p->~T();
   }
 
   template< typename U >
