@@ -13,7 +13,13 @@ extern CustomDeallocator* customDealloc;
 template< typename T >
 struct STDAllocator
 {
-  using value_type = T;
+  using value_type      = T;
+  using pointer         = value_type*;
+  using const_pointer   = const value_type*;
+  using reference       = value_type&;
+  using const_reference = const value_type&;
+  using size_type       = std::size_t;
+  using difference_type = std::ptrdiff_t;
 
   STDAllocator() = default;
 
