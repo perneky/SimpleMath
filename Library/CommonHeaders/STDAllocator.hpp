@@ -34,6 +34,9 @@ struct STDAllocator
   {
     SimpleMath::customDealloc ? SimpleMath::customDealloc( ptr ) : std::free( ptr );
   }
+
+  template< typename U >
+  using rebind = STDAllocator< U >;
 };
 
 }
