@@ -3,6 +3,7 @@
 #include "Parser/Parser.hpp"
 
 #include <cstring>
+#include <cstdlib>
 
 namespace SimpleMath
 {
