@@ -3,6 +3,7 @@
 #include "../../PublicInterface/BinaryInterface.hpp"
 
 #include <cstdlib>
+#include <limits>
 
 namespace SimpleMath
 {
