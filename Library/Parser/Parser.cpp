@@ -622,7 +622,7 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
   else
   {
     using ArgSection = std::pair< Tokenizer::Tokens::const_iterator, Tokenizer::Tokens::const_iterator >;
-    auto argSections = std::make_unique< ArgSection[] >( func.argCount );
+    std::unique_ptr< ArgSection[] > argSections( new ArgSection[ func.argCount ] );
 
     std::unique_ptr< ExpressionTree::FunctionBase > resultFunction;
     switch ( func.argCount )
