@@ -4,6 +4,7 @@
 #include "SimpleMath.hpp"
 #include "ExpressionTree/ValidationError.hpp"
 #include <cstring>
+#include <cmath>
 
 using namespace SimpleMath;
 

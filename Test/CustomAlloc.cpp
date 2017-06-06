@@ -4,25 +4,20 @@ using namespace SimpleMath;
 
 struct CustomAllocTesting : ResultTesting {};
 
-static size_t                    memCount = 0;
-static std::map< void*, size_t > memMap;
+static int memCount = 0;
 
 TEST_F( CustomAllocTesting, Basic )
 {
   memCount = 0;
-  memMap.clear();
 
   SetAllocator( []( size_t n )
   {
-    memCount += n;
-    auto p = std::malloc( n );
-    memMap[ p ] = n;
-    return p;
+    memCount++;
+    return std::malloc( n );
   },
   []( void* p )
   {
-    memCount -= memMap[ p ];
-    memMap.erase( p );
+    memCount--;
     std::free( p );
   } );
 
