@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include "Optimizer.hpp"
 
 namespace SimpleMath
 {
@@ -20,6 +21,17 @@ public:
       delete leftOperand;
     if ( rightOperand )
       delete rightOperand;
+  }
+
+  virtual bool IsConstant() const noexcept override
+  {
+    return leftOperand->IsConstant() && rightOperand->IsConstant();
+  }
+
+  virtual void OptimizeChildren( const EvaluateContext& context ) override
+  {
+    leftOperand  = Optimize( leftOperand,  context );
+    rightOperand = Optimize( rightOperand, context );
   }
 
   void SetLeftOperand( Node* op ) noexcept

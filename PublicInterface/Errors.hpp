@@ -6,6 +6,7 @@ namespace SimpleMath
 enum class ErrorType
 {
   NoError,
+  InternalError,
   UnknownError,
   InvalidDimensions,
   InvalidArguments,

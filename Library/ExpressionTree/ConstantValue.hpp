@@ -53,6 +53,11 @@ public:
     return dim;
   }
 
+  virtual bool IsConstant() const noexcept override
+  {
+    return true;
+  }
+
 private:
   real value[ dim ];
 };

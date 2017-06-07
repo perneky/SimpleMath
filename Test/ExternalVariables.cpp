@@ -46,7 +46,7 @@ TEST_F( ExternalVariablesTesting, Animating )
 
   ExternalVariables::Variable externalVariables[ 1 ] =
   {
-    ExternalVariables::Variable( "time", real( 0 ) ),
+    ExternalVariables::Variable( false, "time", real( 0 ) ),
   };
 
   EvaluateContext context;

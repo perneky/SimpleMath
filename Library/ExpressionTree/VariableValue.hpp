@@ -48,6 +48,11 @@ public:
     return dim;
   }
 
+  virtual bool IsConstant() const noexcept override
+  {
+    return false;
+  }
+
 private:
   size_t index;
 };

@@ -84,8 +84,8 @@ struct ResultTesting : testing::Test
 
   const ExternalVariables::Variable externalVariables[ 2 ] =
   {
-    ExternalVariables::Variable( "test_number1", real( 7  ) ),
-    ExternalVariables::Variable( "test_number2", real( 14 ) ),
+    ExternalVariables::Variable( true, "test_number1", real( 7  ) ),
+    ExternalVariables::Variable( true, "test_number2", real( 14 ) ),
   };
 
   static size_t ExternalTestFunction( const EvaluateContext& context, size_t argCount, const size_t* elementsCount, const EvalResult* args, EvalResult result )
@@ -107,6 +107,6 @@ struct ResultTesting : testing::Test
 
   const ExternalFunctions::Function externalFunctions[ 1 ] =
   {
-    ExternalFunctions::Function( "test", ExternalTestFunction, ValidateTest, 1 ),
+    ExternalFunctions::Function( true, "test", ExternalTestFunction, ValidateTest, 1 ),
   };
 };

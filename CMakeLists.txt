@@ -15,6 +15,7 @@ option( USE_DEGREES_FOR_ANGLES "Set to ON to make SimpleMath calculate with degr
 
 if ( WIN32 )
   add_definitions( -DNOMINMAX )
+  add_definitions( -DWIN32_LEAN_AND_MEAN )
 endif()
 
 if ( USE_DOUBLE_PRECISION )

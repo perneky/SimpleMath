@@ -19,6 +19,9 @@ public:
 
   virtual size_t Validate( const EvaluateContext& context ) const override
   {
+    if ( !leftOperand || !rightOperand )
+      throw ValidationError( ErrorType::InternalError, "Both operand should be valid for operators." );
+
     auto ldim = leftOperand ->Validate( context );
     auto rdim = rightOperand->Validate( context );
 

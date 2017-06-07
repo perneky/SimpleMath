@@ -29,27 +29,27 @@ namespace Parser
 
 static const ExternalVariables::Variable internalVariableList[] =
 {
-  ExternalVariables::Variable( "pi",        piValue     ),
-  ExternalVariables::Variable( "two_pi",    piValue * 2 ),
-  ExternalVariables::Variable( "half_pi",   halfPiValue ),
+  ExternalVariables::Variable( true, "pi",        piValue     ),
+  ExternalVariables::Variable( true, "two_pi",    piValue * 2 ),
+  ExternalVariables::Variable( true, "half_pi",   halfPiValue ),
 
-  ExternalVariables::Variable( "vec2_zero",  0, 0 ),
-  ExternalVariables::Variable( "vec2_one",   1, 1 ),
-  ExternalVariables::Variable( "vec2_xaxis", 1, 0 ),
-  ExternalVariables::Variable( "vec2_yaxis", 0, 1 ),
+  ExternalVariables::Variable( true, "vec2_zero",  0, 0 ),
+  ExternalVariables::Variable( true, "vec2_one",   1, 1 ),
+  ExternalVariables::Variable( true, "vec2_xaxis", 1, 0 ),
+  ExternalVariables::Variable( true, "vec2_yaxis", 0, 1 ),
 
-  ExternalVariables::Variable( "vec3_zero",  0, 0, 0 ),
-  ExternalVariables::Variable( "vec3_one",   1, 1, 1 ),
-  ExternalVariables::Variable( "vec3_xaxis", 1, 0, 0 ),
-  ExternalVariables::Variable( "vec3_yaxis", 0, 1, 0 ),
-  ExternalVariables::Variable( "vec3_zaxis", 0, 0, 1 ),
+  ExternalVariables::Variable( true, "vec3_zero",  0, 0, 0 ),
+  ExternalVariables::Variable( true, "vec3_one",   1, 1, 1 ),
+  ExternalVariables::Variable( true, "vec3_xaxis", 1, 0, 0 ),
+  ExternalVariables::Variable( true, "vec3_yaxis", 0, 1, 0 ),
+  ExternalVariables::Variable( true, "vec3_zaxis", 0, 0, 1 ),
 
-  ExternalVariables::Variable( "vec4_zero",  0, 0, 0, 0 ),
-  ExternalVariables::Variable( "vec4_one",   1, 1, 1, 1 ),
-  ExternalVariables::Variable( "vec4_xaxis", 1, 0, 0, 0 ),
-  ExternalVariables::Variable( "vec4_yaxis", 0, 1, 0, 0 ),
-  ExternalVariables::Variable( "vec4_zaxis", 0, 0, 1, 0 ),
-  ExternalVariables::Variable( "vec4_waxis", 0, 0, 0, 1 ),
+  ExternalVariables::Variable( true, "vec4_zero",  0, 0, 0, 0 ),
+  ExternalVariables::Variable( true, "vec4_one",   1, 1, 1, 1 ),
+  ExternalVariables::Variable( true, "vec4_xaxis", 1, 0, 0, 0 ),
+  ExternalVariables::Variable( true, "vec4_yaxis", 0, 1, 0, 0 ),
+  ExternalVariables::Variable( true, "vec4_zaxis", 0, 0, 1, 0 ),
+  ExternalVariables::Variable( true, "vec4_waxis", 0, 0, 0, 1 ),
 };
 
 static const ExternalVariables internalConstants( internalVariableList );
@@ -375,24 +375,24 @@ static size_t ValidateVectorCross( const EvaluateContext& /*context*/, size_t ar
 
 static const ExternalFunctions::Function internalFunctions[] =
 {
-  ExternalFunctions::Function( "sin",       WrapSin,         ValidateSin,             1 ),
-  ExternalFunctions::Function( "cos",       WrapCos,         ValidateCos,             1 ),
-  ExternalFunctions::Function( "tan",       WrapTan,         ValidateTan,             1 ),
-  ExternalFunctions::Function( "ctg",       WrapCtg,         ValidateCtg,             1 ),
-  ExternalFunctions::Function( "asin",      WrapASin,        ValidateASin,            1 ),
-  ExternalFunctions::Function( "acos",      WrapACos,        ValidateACos,            1 ),
-  ExternalFunctions::Function( "atan",      WrapATan,        ValidateATan,            1 ),
-  ExternalFunctions::Function( "sqrt",      WrapSqrt,        ValidateSqrt,            1 ),
-  ExternalFunctions::Function( "saturate",  WrapSaturate,    ValidateSaturate,        1 ),
-  ExternalFunctions::Function( "min",       WrapMin,         ValidateMin,             2 ),
-  ExternalFunctions::Function( "max",       WrapMax,         ValidateMax,             2 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      2 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      3 ),
-  ExternalFunctions::Function( "vector",    MakeVector,      ValidateMakeVector,      4 ),
-  ExternalFunctions::Function( "length",    VectorLength,    ValidateVectorLength,    1 ),
-  ExternalFunctions::Function( "normalize", VectorNormalize, ValidateVectorNormalize, 1 ),
-  ExternalFunctions::Function( "dot",       VectorDot,       ValidateVectorDot,       2 ),
-  ExternalFunctions::Function( "cross",     VectorCross,     ValidateVectorCross,     2 ),
+  ExternalFunctions::Function( true, "sin",       WrapSin,         ValidateSin,             1 ),
+  ExternalFunctions::Function( true, "cos",       WrapCos,         ValidateCos,             1 ),
+  ExternalFunctions::Function( true, "tan",       WrapTan,         ValidateTan,             1 ),
+  ExternalFunctions::Function( true, "ctg",       WrapCtg,         ValidateCtg,             1 ),
+  ExternalFunctions::Function( true, "asin",      WrapASin,        ValidateASin,            1 ),
+  ExternalFunctions::Function( true, "acos",      WrapACos,        ValidateACos,            1 ),
+  ExternalFunctions::Function( true, "atan",      WrapATan,        ValidateATan,            1 ),
+  ExternalFunctions::Function( true, "sqrt",      WrapSqrt,        ValidateSqrt,            1 ),
+  ExternalFunctions::Function( true, "saturate",  WrapSaturate,    ValidateSaturate,        1 ),
+  ExternalFunctions::Function( true, "min",       WrapMin,         ValidateMin,             2 ),
+  ExternalFunctions::Function( true, "max",       WrapMax,         ValidateMax,             2 ),
+  ExternalFunctions::Function( true, "vector",    MakeVector,      ValidateMakeVector,      2 ),
+  ExternalFunctions::Function( true, "vector",    MakeVector,      ValidateMakeVector,      3 ),
+  ExternalFunctions::Function( true, "vector",    MakeVector,      ValidateMakeVector,      4 ),
+  ExternalFunctions::Function( true, "length",    VectorLength,    ValidateVectorLength,    1 ),
+  ExternalFunctions::Function( true, "normalize", VectorNormalize, ValidateVectorNormalize, 1 ),
+  ExternalFunctions::Function( true, "dot",       VectorDot,       ValidateVectorDot,       2 ),
+  ExternalFunctions::Function( true, "cross",     VectorCross,     ValidateVectorCross,     2 ),
 };
 
 using ParentMap = std::map< ExpressionTree::Node*, ExpressionTree::Node*, std::less< ExpressionTree::Node* >, STDAllocator< std::pair< const ExpressionTree::Node*, ExpressionTree::Node* > > >;
@@ -728,19 +728,39 @@ static ExpressionTree::Node* CreateFromString( Tokenizer::Tokens::const_iterator
     const auto& ec = context.variables.instances[ index ];
     if ( NameCompare( ec.name, ec.nameLength, begin->start, begin->length ) )
     {
-      switch ( context.variables.instances[ index ].dimensions )
+      if ( context.variables.instances[ index ].isConst )
       {
-      case 1:
-        return new ExpressionTree::VariableValue< 1 >( index );
-      case 2:
-        return new ExpressionTree::VariableValue< 2 >( index );
-      case 3:
-        return new ExpressionTree::VariableValue< 3 >( index );
-      case 4:
-        return new ExpressionTree::VariableValue< 4 >( index );
-      default:
-        assert( false && "Invalid external variable dimensions." );
-        return nullptr;
+        switch ( context.variables.instances[ index ].dimensions )
+        {
+        case 1:
+          return new ExpressionTree::ConstantValue< 1 >( context.variables.instances[ index ].value );
+        case 2:
+          return new ExpressionTree::ConstantValue< 2 >( context.variables.instances[ index ].value );
+        case 3:
+          return new ExpressionTree::ConstantValue< 3 >( context.variables.instances[ index ].value );
+        case 4:
+          return new ExpressionTree::ConstantValue< 4 >( context.variables.instances[ index ].value );
+        default:
+          assert( false && "Invalid internal variable dimensions." );
+          return nullptr;
+        }
+      }
+      else
+      {
+        switch ( context.variables.instances[ index ].dimensions )
+        {
+        case 1:
+          return new ExpressionTree::VariableValue< 1 >( index );
+        case 2:
+          return new ExpressionTree::VariableValue< 2 >( index );
+        case 3:
+          return new ExpressionTree::VariableValue< 3 >( index );
+        case 4:
+          return new ExpressionTree::VariableValue< 4 >( index );
+        default:
+          assert( false && "Invalid external variable dimensions." );
+          return nullptr;
+        }
       }
     }
   }
@@ -883,6 +903,7 @@ ExpressionTree::Node* Parser::Parse( const char* expressionText
     ParentMap parentMap;
     auto tree = BuildTree( tokenizer.GetTokens().begin(), tokenizer.GetTokens().end(), parentMap, context );
     tree->Validate( context );
+    tree = ExpressionTree::Optimize( tree, context );
     return tree;
   }
   catch ( const Exception& e )

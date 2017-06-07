@@ -59,6 +59,21 @@ public:
     return func.value( context, argCount, dims, args, result );
   }
 
+  virtual bool IsConstant() const noexcept override
+  {
+    bool isConst = func.isConst;
+    for ( size_t argIndex = 0; argIndex < argCount; ++argIndex )
+      isConst &= operands[ argIndex ]->IsConstant();
+
+    return isConst;
+  }
+
+  virtual void OptimizeChildren( const EvaluateContext& context ) override
+  {
+    for ( size_t argIndex = 0; argIndex < argCount; ++argIndex )
+      operands[ argIndex ] = Optimize( operands[ argIndex ], context );
+  }
+
 protected:
   ExternalFunctions::Function func;
 
@@ -82,6 +97,11 @@ public:
   virtual size_t Evaluate( const EvaluateContext& context, EvalResult result ) const noexcept override
   {
     return func.value( context, 0, nullptr, nullptr, result );
+  }
+
+  virtual bool IsConstant() const noexcept override
+  {
+    return func.isConst;
   }
 
 protected:
