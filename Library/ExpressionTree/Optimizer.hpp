@@ -34,6 +34,8 @@ static Node* Optimize( Node* node, const EvaluateContext& context )
     }
   }
 
+  node->OptimizeChildren( context );
+
   return node;
 }
 
