@@ -7,7 +7,7 @@ set( BUILD_GTEST ON CACHE BOOL "Only gtest is needed" FORCE )
 set( BUILD_GMOCK OFF CACHE BOOL "gmock is not needed" FORCE )
 set( gtest_force_shared_crt ON CACHE BOOL "SimpleMath is built using the dynamic runtime" FORCE )
 
-add_subdirectory( ThirdParty/gtest )
+add_subdirectory( Submodules/gtest )
 
 #Simple math
 option( USE_DOUBLE_PRECISION "Set to ON to make SimpleMath work with double precision floating point numbers." OFF )

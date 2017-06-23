@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ThirdParty/gtest/googletest/include/gtest/gtest.h"
+#include "../Submodules/gtest/googletest/include/gtest/gtest.h"
 #include "SimpleMath.hpp"
 #include "ExpressionTree/ValidationError.hpp"
 #include <cstring>

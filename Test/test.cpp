@@ -1,5 +1,5 @@
 #include <cstring>
-#include "../ThirdParty/gtest/googletest/include/gtest/gtest.h"
+#include "../Submodules/gtest/googletest/include/gtest/gtest.h"
 #include "SimpleMath.hpp"
 
 #ifdef WIN32
