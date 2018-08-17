@@ -1,7 +1,5 @@
 #include "TestBase.hpp"
 
-using namespace SimpleMath;
-
 struct VectorTesting : ResultTesting {};
 
 TEST_F( VectorTesting, Single2D )

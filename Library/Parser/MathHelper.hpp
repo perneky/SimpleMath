@@ -23,12 +23,12 @@ static real ctg( real x )
   return std::tan( halfPiValue - x );
 }
 
-#if USE_DEGREES_FOR_ANGLES
-# define CTM( x ) ToRadians( (x) )
-# define MTC( x ) ToDegrees( (x) )
+#if SIMPLE_MATH_USE_DEGREES_FOR_ANGLES
+# define CTM( x ) SimpleMath::ToRadians( (x) )
+# define MTC( x ) SimpleMath::ToDegrees( (x) )
 #else
 # define CTM( x ) (real(x))
 # define MTC( x ) (real(x))
-#endif // USE_DEGREES_FOR_ANGLES
+#endif // SIMPLE_MATH_USE_DEGREES_FOR_ANGLES
 
 }

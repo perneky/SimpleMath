@@ -63,7 +63,7 @@ const SimpleMath::Expression* ParseExpression( const char* expressionText
                                              , SimpleMath::ParseErrorDetails& error
                                              , const SimpleMath::EvaluateContext& context )
 {
-  if ( length == 0 )
+  if ( length == 0 && expressionText )
     length = std::strlen( expressionText );
 
   if ( auto node = SimpleMath::Parser::Parser::Parse( expressionText, length, error, context ) )

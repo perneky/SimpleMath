@@ -99,10 +99,17 @@ struct ExternalFunctions
   size_t          instanceCount = 0;
 };
 
+struct ExternalObjects
+{
+	const void** instances     = nullptr;
+	size_t       instanceCount = 0;
+};
+
 struct EvaluateContext
 {
   ExternalVariables variables;
   ExternalFunctions functions;
+	ExternalObjects   objects;
 };
 
 }

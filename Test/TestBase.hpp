@@ -6,7 +6,13 @@
 #include <cstring>
 #include <cmath>
 
-using namespace SimpleMath;
+using SimpleMath::real;
+using SimpleMath::ErrorType;
+using SimpleMath::EvaluateContext;
+using SimpleMath::ExternalVariables;
+using SimpleMath::ExternalFunctions;
+using SimpleMath::EvalResult;
+using SimpleMath::ParseErrorDetails;
 
 struct ResultTesting : testing::Test
 {
@@ -49,7 +55,7 @@ struct ResultTesting : testing::Test
   {
     ParseErrorDetails error;
 
-    auto script = ParseExpression( expression, std::strlen( expression ), error, context );
+    auto script = ParseExpression( expression, expression ? std::strlen( expression ) : 0, error, context );
     ASSERT_EQ( nullptr, script );
 
     EXPECT_EQ( type, error.type );
@@ -100,7 +106,7 @@ struct ResultTesting : testing::Test
   static size_t ValidateTest( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
   {
     if ( argCount != 1 )
-      throw ExpressionTree::ValidationError( ErrorType::InvalidArguments, "test function takes only one argument with any number of dimensions." );
+      throw std::exception( "test function takes only one argument with any number of dimensions." );
 
     return elementsCount[ 0 ];
   }

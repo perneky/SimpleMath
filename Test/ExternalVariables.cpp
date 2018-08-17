@@ -1,8 +1,6 @@
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
 
-using namespace SimpleMath;
-
 struct ExternalVariablesTesting : ResultTesting {};
 
 TEST_F( ExternalVariablesTesting, Standalone1 )
@@ -64,7 +62,7 @@ TEST_F( ExternalVariablesTesting, Animating )
 
     auto resultDims = script->Evaluate( context, result );
     EXPECT_EQ( 1, resultDims );
-    EXPECT_NEAR( std::sin( CTM( piValue * iter ) ), result[ 0 ], std::numeric_limits< real >::epsilon() * 10 );
+    EXPECT_NEAR( std::sin( CTM( SimpleMath::piValue * iter ) ), result[ 0 ], std::numeric_limits< real >::epsilon() * 10 );
   }
 
   WasteExpression( script );

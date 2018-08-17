@@ -1,8 +1,16 @@
 #include "TestBase.hpp"
 
-using namespace SimpleMath;
-
 struct ValidationTesting : ResultTesting {};
+
+TEST_F( ValidationTesting, empty_string )
+{
+	TestError( "", ErrorType::InternalError );
+}
+
+TEST_F( ValidationTesting, null_string )
+{
+	TestError( nullptr, ErrorType::InternalError );
+}
 
 TEST_F( ValidationTesting, sin_with_zero_args )
 {

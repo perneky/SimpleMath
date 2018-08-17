@@ -1,8 +1,6 @@
 #include "TestBase.hpp"
 #include "../Library/Parser/MathHelper.hpp"
 
-using namespace SimpleMath;
-
 struct ExternalFunctionTesting : ResultTesting {};
 
 TEST_F( ExternalFunctionTesting, Match1 )

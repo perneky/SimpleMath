@@ -11,24 +11,24 @@ set( gtest_force_shared_crt ON CACHE BOOL "SimpleMath is built using the dynamic
 add_subdirectory( Submodules/gtest )
 
 #Simple math
-option( USE_DOUBLE_PRECISION "Set to ON to make SimpleMath work with double precision floating point numbers." OFF )
-option( USE_DEGREES_FOR_ANGLES "Set to ON to make SimpleMath calculate with degress for angles instead of radians." OFF )
+option( SIMPLE_MATH_USE_DOUBLE_PRECISION "Set to ON to make SimpleMath work with double precision floating point numbers." OFF )
+option( SIMPLE_MATH_USE_DEGREES_FOR_ANGLES "Set to ON to make SimpleMath calculate with degress for angles instead of radians." OFF )
 
 if ( WIN32 )
   add_definitions( -DNOMINMAX )
   add_definitions( -DWIN32_LEAN_AND_MEAN )
 endif()
 
-if ( USE_DOUBLE_PRECISION )
-  add_definitions( -DUSE_DOUBLE_PRECISION=1 )
+if ( SIMPLE_MATH_USE_DOUBLE_PRECISION )
+  add_definitions( -DSIMPLE_MATH_USE_DOUBLE_PRECISION=1 )
 else()
-  add_definitions( -DUSE_DOUBLE_PRECISION=0 )
+  add_definitions( -DSIMPLE_MATH_USE_DOUBLE_PRECISION=0 )
 endif()
 
-if ( USE_DEGREES_FOR_ANGLES )
-  add_definitions( -DUSE_DEGREES_FOR_ANGLES=1 )
+if ( SIMPLE_MATH_USE_DEGREES_FOR_ANGLES )
+  add_definitions( -DSIMPLE_MATH_USE_DEGREES_FOR_ANGLES=1 )
 else()
-  add_definitions( -DUSE_DEGREES_FOR_ANGLES=0 )
+  add_definitions( -DSIMPLE_MATH_USE_DEGREES_FOR_ANGLES=0 )
 endif()
 
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )

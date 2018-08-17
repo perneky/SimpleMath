@@ -1,7 +1,5 @@
 #include "TestBase.hpp"
 
-using namespace SimpleMath;
-
 struct CustomAllocTesting : ResultTesting {};
 
 static int memCount = 0;

@@ -895,6 +895,9 @@ ExpressionTree::Node* Parser::Parse( const char* expressionText
 {
   try
   {
+		if ( !expressionText || length == 0 )
+			throw ExpressionTree::ValidationError( ErrorType::InternalError, "Expression is zero length or null pointer." );
+
     Tokenizer tokenizer( expressionText, length );
 
     for ( const auto& token : tokenizer.GetTokens() )

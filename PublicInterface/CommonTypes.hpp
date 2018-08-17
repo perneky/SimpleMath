@@ -19,11 +19,11 @@
 namespace SimpleMath
 {
 
-#if USE_DOUBLE_PRECISION
+#if SIMPLE_MATH_USE_DOUBLE_PRECISION
 using real = double;
 #else
 using real = float;
-#endif // USE_DOUBLE_PRECISION
+#endif // SIMPLE_MATH_USE_DOUBLE_PRECISION
 
 using size_t = std::size_t;
 
