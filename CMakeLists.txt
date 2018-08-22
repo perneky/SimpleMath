@@ -5,6 +5,7 @@ project( SimpleMath )
 #gtest
 set( BUILD_GTEST ON CACHE BOOL "Only gtest is needed" FORCE )
 set( BUILD_GMOCK OFF CACHE BOOL "gmock is not needed" FORCE )
+set( INSTALL_GTEST OFF CACHE BOOL "Installing gtest is not needed" FORCE )
 set( gtest_force_shared_crt ON CACHE BOOL "SimpleMath is built using the dynamic runtime" FORCE )
 
 add_subdirectory( Submodules/gtest )
