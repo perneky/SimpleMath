@@ -1,3 +1,9 @@
+// The current implementation of the allocator matching seems to be broken.
+// Got to check this later.
+#ifdef _MSC_VER
+# define _ENFORCE_MATCHING_ALLOCATORS 0
+#endif // _MSC_VER
+
 #include "Parser.hpp"
 
 #include "ExpressionTree/ConstantValue.hpp"
@@ -467,19 +473,6 @@ static void Validate( const Tokenizer::Token& token )
   }
 }
 
-static void Check( bool condition, ErrorType type, const char* format, ... )
-{
-  if ( !condition )
-  {
-    va_list args;
-    va_start( args, format );
-
-    OnScopeExit( va_end( args ) );
-
-    throw CompileError( type, format, args );
-  }
-}
-
 static Tokenizer::Tokens::const_iterator FindClosingParenthesis( Tokenizer::Tokens::const_iterator begin
                                                                , Tokenizer::Tokens::const_iterator end )
 {
@@ -810,7 +803,8 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
     case TokenType::Number:
     {
       auto number = real( ToReal( iter->start, iter->length ) );
-      Check( cursorToken == TokenType::Operator || cursorToken == TokenType::Unknown, ErrorType::SyntaxError, "Unexpected number: %f", number );
+      if ( cursorToken != TokenType::Operator && cursorToken != TokenType::Unknown )
+        throw CompileError( ErrorType::SyntaxError, "Unexpected number: %f", number );
       auto node = new ExpressionTree::ConstantValue< 1 >( &number );
       InsertNode( cursor, cursorToken, node, iter->type, root, parentMap );
       break;
@@ -825,7 +819,8 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
         auto node = new ExpressionTree::ConstantValue< 1 >( &zero );
         InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
       }
-      Check( cursorToken == TokenType::Number, ErrorType::SyntaxError, "Unexpected operator: %c", opc );
+      if ( cursorToken != TokenType::Number )
+        throw CompileError( ErrorType::SyntaxError, "Unexpected operator: %c", opc );
       ExpressionTree::Node* node = nullptr;
       switch ( opc )
       {

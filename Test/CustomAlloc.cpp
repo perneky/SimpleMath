@@ -8,12 +8,12 @@ TEST_F( CustomAllocTesting, Basic )
 {
   memCount = 0;
 
-  SetAllocator( []( size_t n )
+  SetAllocator( []( size_t n ) noexcept
   {
     memCount++;
     return std::malloc( n );
   },
-  []( void* p )
+  []( void* p ) noexcept
   {
     memCount--;
     std::free( p );

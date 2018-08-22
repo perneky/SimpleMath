@@ -24,11 +24,6 @@ public:
 
     va_end( args );
   }
-  CompileError( ErrorType type, const char* format, va_list args )
-    : Exception( type )
-  {
-    std::vsnprintf( message, sizeof( message ), format, args );
-  }
 
   virtual const char* what() const noexcept
   {

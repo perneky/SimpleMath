@@ -23,14 +23,6 @@ struct ScopeExit
   T f;
 };
 
-template < typename T >
-auto MakeScopeExit( T&& f )
-{
-  return ScopeExit< T >( std::forward< T >( f ) );
-};
-
-#define OnScopeExit( f ) auto scopeExit_##__COUNTER__ = ::SimpleMath::MakeScopeExit( [&]{ f; } )
-
 class Exception : public std::exception
 {
 public:
