@@ -106,7 +106,7 @@ struct ResultTesting : testing::Test
   static size_t ValidateTest( const EvaluateContext& /*context*/, size_t argCount, const size_t* elementsCount )
   {
     if ( argCount != 1 )
-      throw std::exception( "test function takes only one argument with any number of dimensions." );
+      throw std::invalid_argument( "test function takes only one argument with any number of dimensions." );
 
     return elementsCount[ 0 ];
   }
