@@ -14,6 +14,7 @@
 #include "ExpressionTree/OperatorDiv.hpp"
 #include "ExpressionTree/OperatorPow.hpp"
 #include "ExpressionTree/OperatorMod.hpp"
+#include "ExpressionTree/OperatorNegate.hpp"
 #include "ExpressionTree/Function.hpp"
 #include "Tokenizer.hpp"
 #include "CompileError.hpp"
@@ -567,6 +568,24 @@ static void InsertNode( ExpressionTree::Node*&  cursor
       cursorType = newNodeType;
       break;
     }
+    case TokenType::Unknown:
+    {
+      // Negation operator
+      auto insertTo       = OrderExpression( cursor, newNode, rootNode, parentMap );
+      auto insertToParent = parentMap[ insertTo ];
+
+      static_cast< ExpressionTree::OperatorBase* >( newNode )->SetLeftOperand( insertTo );
+      parentMap[ insertTo ] = newNode;
+      parentMap[ newNode  ] = insertToParent;
+      if ( insertToParent )
+        static_cast< ExpressionTree::OperatorBase* >( insertToParent )->SetRightOperand( newNode );
+
+      if ( rootNode == insertTo )
+        rootNode = newNode;
+      cursor     = newNode;
+      cursorType = newNodeType;
+      break;
+    }
     default:
       throw CompileError( ErrorType::SyntaxError, "Operator appears on an invalid place." );
     }
@@ -812,14 +831,8 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
     case TokenType::Operator:
     {
       char opc = iter->start[ 0 ];
-      if ( cursorToken == TokenType::Unknown && opc == '-' )
-      {
-        // Negation at the start of an expression
-        real zero = 0;
-        auto node = new ExpressionTree::ConstantValue< 1 >( &zero );
-        InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
-      }
-      if ( cursorToken != TokenType::Number )
+      bool isNegation = opc == '-' && cursorToken == TokenType::Unknown;
+      if ( cursorToken != TokenType::Number && !isNegation )
         throw CompileError( ErrorType::SyntaxError, "Unexpected operator: %c", opc );
       ExpressionTree::Node* node = nullptr;
       switch ( opc )
@@ -828,7 +841,10 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
         node = new ExpressionTree::OperatorAdd;
         break;
       case '-':
-        node = new ExpressionTree::OperatorSub;
+        if ( cursorToken == TokenType::Unknown )
+          node = new ExpressionTree::OperatorNegate;
+        else
+          node = new ExpressionTree::OperatorSub;
         break;
       case '*':
         node = new ExpressionTree::OperatorMul;

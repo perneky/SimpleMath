@@ -52,6 +52,16 @@ TEST_F( ScalarTesting, Negate )
   TestResult( "-7", -7 );
 }
 
+TEST_F( ScalarTesting, NegateAndSubtract )
+{
+  TestResult( "-7-7", -14 );
+}
+
+TEST_F( ScalarTesting, LongExpression )
+{
+  TestResult( "-7-7*3/(-12/2)*12+32/14-5", -7-7*3/(-real(12)/2)*12+real(32)/14-5 );
+}
+
 TEST_F( ScalarTesting, Spaces1 )
 {
   TestResult( "14 /7", real( 14 ) / 7 );
