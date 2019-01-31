@@ -128,7 +128,7 @@ struct ResultTesting : testing::Test
   static size_t ValidateScriptRandom( const SimpleMath::EvaluateContext&, size_t ArgCount, const size_t* ElementsCount )
   {
     if ( ArgCount != 2 || ElementsCount[ 0 ] != 1 || ElementsCount[ 1 ] != 1 )
-      throw std::exception( "random function takes exactly two scalar arguments." );
+      throw std::invalid_argument( "random function takes exactly two scalar arguments." );
 
     return 1;
   }
