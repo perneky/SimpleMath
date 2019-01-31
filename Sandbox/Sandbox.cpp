@@ -9,11 +9,24 @@ static const SimpleMath::ExternalVariables::Variable externalVariables[] =
   SimpleMath::ExternalVariables::Variable( false, "time",        SimpleMath::real( 0  ) ),
 };
 
+static unsigned Hash( const char* s, size_t l )
+{
+  auto result = 0;
+  for ( size_t ix = 0; ix < l; ix++ )
+  {
+    result += s[ ix ];
+    result <<= 1;
+  }
+  return result;
+}
+
 int main()
 {
   SimpleMath::EvaluateContext context;
   context.variables.instances     = externalVariables;
   context.variables.instanceCount = sizeof( externalVariables ) / sizeof externalVariables[ 0 ];
+
+  SetHashFunction( Hash );
 
   while ( true )
   {

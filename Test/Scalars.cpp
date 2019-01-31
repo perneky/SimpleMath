@@ -1,5 +1,16 @@
 #include "TestBase.hpp"
 
+static unsigned Hash( const char* s, size_t l )
+{
+  auto result = 0;
+  for ( size_t ix = 0; ix < l; ix++ )
+  {
+    result += s[ ix ];
+    result <<= 1;
+  }
+  return result;
+}
+
 struct ScalarTesting : ResultTesting {};
 
 TEST_F( ScalarTesting, Single )
@@ -85,4 +96,23 @@ TEST_F( ScalarTesting, Spaces4 )
 TEST_F( ScalarTesting, Tabs )
 {
   TestResult( "\t\t14\t\t\t/\t7\t\t\t\t\t", real( 14 ) / 7 );
+}
+
+TEST_F( ScalarTesting, Hash )
+{
+  SetHashFunction( Hash );
+  TestResult( "'asd'", real( Hash( "asd", 3 ) ) );
+  SetHashFunction( nullptr );
+}
+
+TEST_F( ScalarTesting, HashWithOp )
+{
+  SetHashFunction( Hash );
+  TestResult( "'asd'+3", real( Hash( "asd", 3 ) ) + 3 );
+  SetHashFunction( nullptr );
+}
+
+TEST_F( ScalarTesting, HashError )
+{
+  TestError( "'asd'", ErrorType::InvalidArguments );
 }

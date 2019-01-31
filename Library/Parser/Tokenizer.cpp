@@ -63,6 +63,11 @@ static size_t FindNextNotNumber( const char* text, size_t length, size_t start )
   return FindNextNotOfAny( text, length, start, numberCharacters );
 }
 
+static size_t FindNextId( const char* text, size_t length, size_t start )
+{
+  return FindNextOfAny( text, length, start, "'" );
+}
+
 Tokenizer::Tokenizer( const char* expressionText, size_t length )
 {
   size_t nextTokenStart = FindNextNotWhitespace( expressionText, length, 0 );
@@ -108,6 +113,11 @@ Tokenizer::Tokenizer( const char* expressionText, size_t length )
       nextTokenType = TokenType::Number;
       nextTokenEnd  = FindNextNotNumber( expressionText, length, nextTokenStart );
       break;
+    case '\'':
+      nextTokenStart++;
+      nextTokenType = TokenType::Id;
+      nextTokenEnd  = FindNextId( expressionText, length, nextTokenStart );
+      break;
     default:
       nextTokenType = TokenType::String;
       nextTokenEnd  = FindNextSeparator( expressionText, length, nextTokenStart );
@@ -116,6 +126,9 @@ Tokenizer::Tokenizer( const char* expressionText, size_t length )
 
     size_t realEnd = nextTokenEnd < endOfStream ? nextTokenEnd : length;
     tokens.emplace_back( expressionText + nextTokenStart, realEnd - nextTokenStart, nextTokenType );
+
+    if ( nextTokenType == TokenType::Id )
+      ++nextTokenEnd;
 
     nextTokenStart = FindNextNotWhitespace( expressionText, length, nextTokenEnd );
   }

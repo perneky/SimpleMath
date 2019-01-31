@@ -13,6 +13,7 @@ enum class TokenType
   OpenParenthesis,
   CloseParenthesis,
   String,
+  Id,
   Comma,
 };
 

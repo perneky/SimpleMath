@@ -28,3 +28,8 @@ TEST_F( ExternalFunctionTesting, NotMatch3 )
   TestError( "test(vector(1,2),vector(3,4))", ErrorType::InvalidArguments );
 }
 
+TEST_F( ExternalFunctionTesting, Random )
+{
+  TestResult( "random(-2,-2)", -2 );
+}
+

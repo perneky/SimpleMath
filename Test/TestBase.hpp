@@ -111,8 +111,31 @@ struct ResultTesting : testing::Test
     return elementsCount[ 0 ];
   }
 
-  const ExternalFunctions::Function externalFunctions[ 1 ] =
+  static size_t ScriptRandom( const SimpleMath::EvaluateContext& Context, size_t ArgCount, const size_t* ElementsCount, const SimpleMath::EvalResult* Args, SimpleMath::EvalResult Result )
   {
-    ExternalFunctions::Function( true, "test", ExternalTestFunction, ValidateTest, 1 ),
+    assert( ArgCount == 2 && ElementsCount[ 0 ] == 1 && ElementsCount[ 1 ] == 1 );
+
+    auto Min = Args[ 0 ][ 0 ];
+    auto Max = Args[ 1 ][ 0 ];
+
+    if ( Min > Max )
+      std::swap( Min, Max );
+
+    Result[ 0 ] = Min + ( (float)std::rand() / RAND_MAX ) * ( Max - Min );
+
+    return 1;
+  }
+  static size_t ValidateScriptRandom( const SimpleMath::EvaluateContext&, size_t ArgCount, const size_t* ElementsCount )
+  {
+    if ( ArgCount != 2 || ElementsCount[ 0 ] != 1 || ElementsCount[ 1 ] != 1 )
+      throw std::exception( "random function takes exactly two scalar arguments." );
+
+    return 1;
+  }
+
+  const ExternalFunctions::Function externalFunctions[ 2 ] =
+  {
+    ExternalFunctions::Function( true,  "test",   ExternalTestFunction, ValidateTest,         1 ),
+    ExternalFunctions::Function( false, "random", ScriptRandom,         ValidateScriptRandom, 2 ),
   };
 };

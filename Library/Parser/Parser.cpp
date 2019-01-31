@@ -31,6 +31,9 @@
 
 namespace SimpleMath
 {
+
+extern HashFunction hashFunction;
+
 namespace Parser
 {
 
@@ -698,10 +701,13 @@ static ExpressionTree::Node* CreateFunction( Tokenizer::Tokens::const_iterator& 
     argSections[ currentSection ].second = iter;
 
     for ( size_t argIndex = 0; argIndex < func.argCount; ++argIndex )
+    {
+      ParentMap parentMap;
       resultFunction->SetOperand( argIndex, BuildTree( argSections[ argIndex ].first
                                                      , argSections[ argIndex ].second
                                                      , parentMap
                                                      , context ) );
+    }
 
     begin = closing;
     return resultFunction.release();
@@ -885,6 +891,18 @@ static ExpressionTree::Node* BuildTree( Tokenizer::Tokens::const_iterator begin
         throw CompileError( ErrorType::SyntaxError, "Unexpected string: %s", wrongToken.data() );
       }
       auto node = CreateFromString( iter, end, parentMap, context );
+      InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
+      break;
+    }
+    case TokenType::Id:
+    {
+      if ( SimpleMath::hashFunction == nullptr )
+        throw CompileError( ErrorType::InvalidArguments, "Specify a hash function using SetHashFunction if you are using ids." );
+
+      auto number = real( SimpleMath::hashFunction( iter->start, iter->length ) );
+      if ( cursorToken != TokenType::Operator && cursorToken != TokenType::Unknown )
+        throw CompileError( ErrorType::SyntaxError, "Unexpected number: %f", number );
+      auto node = new ExpressionTree::ConstantValue< 1 >( &number );
       InsertNode( cursor, cursorToken, node, TokenType::Number, root, parentMap );
       break;
     }

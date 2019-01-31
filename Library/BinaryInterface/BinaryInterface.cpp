@@ -9,6 +9,7 @@ namespace SimpleMath
 {
   CustomAllocator*   customAlloc   = nullptr;
   CustomDeallocator* customDealloc = nullptr;
+  HashFunction       hashFunction  = nullptr;
 }
 
 void* operator new ( std::size_t size )
@@ -56,6 +57,11 @@ void SetAllocator( SimpleMath::CustomAllocator allocator, SimpleMath::CustomDeal
 {
   SimpleMath::customAlloc   = allocator;
   SimpleMath::customDealloc = deallocator;
+}
+
+void SetHashFunction( SimpleMath::HashFunction hashFunction )
+{
+  SimpleMath::hashFunction = hashFunction;
 }
 
 const SimpleMath::Expression* ParseExpression( const char* expressionText
