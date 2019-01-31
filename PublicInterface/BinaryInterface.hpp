@@ -14,6 +14,11 @@ namespace SimpleMath
   using HashFunction = unsigned( *)( const char*, size_t );
 }
 
+#ifdef __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wc++17-compat-mangling"
+#endif // __clang__
+
 extern "C"
 {
 
@@ -24,3 +29,7 @@ SM_DLLIFACE const SimpleMath::Expression* ParseExpression( const char* expressio
 SM_DLLIFACE void                          WasteExpression( const SimpleMath::Expression* expression );
 
 }
+
+#ifdef __clang__
+# pragma clang diagnostic pop
+#endif // __clang__
